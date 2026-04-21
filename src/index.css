@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Bebas Neue", sans-serif;
+
+  --color-bg-dark: #05060a;
+  --color-surface-dark: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Accent Colors */
+  --color-aqua: #4FFFB0;
+  --color-purple: #7B61FF;
+  --color-google-blue: #4285F4;
+  --color-notebook-green: #34A853;
+  --color-gamma-orange: #FF5C35;
+  --color-claude-salmon: #CC785C;
+  --color-perplexity-cyan: #20C0C0;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-dark text-white font-sans antialiased selection:bg-aqua/30 selection:text-aqua;
+    overflow-x: hidden;
+  }
+}
+
+/* Glassmorphism Styles */
+.glass-container {
+  @apply relative overflow-hidden;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-card-hover {
+  @apply transition-all duration-300;
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transform: translateY(-5px);
+}
+
+.glass-nav {
+  background: rgba(5, 6, 10, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Custom Scroll Snapping */
+.snap-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+  scrollbar-width: none; /* Firefox */
+}
+
+.snap-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.snap-slide {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Vibrant Glows for Glassmorphism Backgrounds */
+.ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, var(--glow-color, rgba(123, 97, 255, 0.15)), transparent 80%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.accent-glow {
+  position: absolute;
+  width: 40vw;
+  height: 40vw;
+  border-radius: 50%;
+  background: var(--accent-color, var(--color-aqua));
+  filter: blur(150px);
+  opacity: 0.2;
+  z-index: 0;
+  pointer-events: none;
+}

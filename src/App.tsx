@@ -1,0 +1,549 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'motion/react';
+import { 
+  Sparkles, 
+  BookOpen, 
+  Zap, 
+  MessageSquare, 
+  Search, 
+  XCircle, 
+  ArrowRight,
+  Monitor,
+  Video,
+  Users,
+  Brain,
+  Layers,
+  CheckCircle2,
+  ChevronDown
+} from 'lucide-react';
+import React, { useState, useEffect, useRef, type ReactNode } from 'react';
+
+// --- Constants & Types ---
+
+const NAVIGATION_HEIGHT = 80;
+
+// --- Components ---
+
+const FadeUp = ({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; key?: React.Key; className?: string }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-100px" }}
+    transition={{ duration: 0.8, ease: [0.21, 0.45, 0.32, 0.9], delay }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
+const StaggerContainer = ({ children, className = "" }: { children: ReactNode; className?: string; key?: React.Key }) => {
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.2
+          }
+        }
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+const StaggerItem = ({ children, className = "" }: { children: ReactNode; className?: string; key?: React.Key }) => (
+  <motion.div
+    variants={{
+      hidden: { opacity: 0, y: 20 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
+const Slide = ({ children, glowColor = "rgba(79, 255, 176, 0.05)" }: { children: ReactNode; glowColor?: string; key?: React.Key }) => {
+  const slideRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: slideRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y1 = useTransform(scrollYProgress, [0, 1], [-100, 100]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [150, -150]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 15]);
+
+  return (
+    <section ref={slideRef} className="snap-slide relative overflow-hidden flex flex-col justify-center px-6 md:px-20 lg:px-32">
+      <div className="ambient-glow" style={{ "--glow-color": glowColor } as any} />
+      
+      {/* Parallax Decorative Elements */}
+      <motion.div 
+        style={{ y: y1, rotate, "--accent-color": glowColor } as any}
+        className="accent-glow top-1/4 -left-10 opacity-20" 
+      />
+      <motion.div 
+        style={{ y: y2, rotate: -rotate, "--accent-color": glowColor } as any}
+        className="accent-glow bottom-1/4 -right-10 opacity-10" 
+      />
+
+      <div className="relative z-10 w-full max-w-7xl mx-auto">
+        {children}
+      </div>
+    </section>
+  );
+};
+
+const Card = ({ title, description, icon: Icon, color = "var(--color-aqua)" }: { title: string; description: string; icon?: any; color?: string }) => (
+  <div className="glass-card glass-card-hover p-8 rounded-3xl group h-full">
+    {Icon && <Icon className="w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity" style={{ color }} />}
+    <h3 className="text-xl font-semibold mb-3">{title}</h3>
+    <p className="text-white/50 leading-relaxed text-sm group-hover:text-white/70 transition-colors">{description}</p>
+  </div>
+);
+
+const Header = ({ currentSlide, totalSlides, scrollProgress }: { currentSlide: number; totalSlides: number; scrollProgress: any }) => {
+  const isScrolled = currentSlide > 0;
+  
+  // Slide current accent color for progress bar
+  const accentColors = [
+    "#4FFFB0", // Slide 1
+    "#7B61FF", // Slide 2
+    "#FFFFFF", // Slide 3
+    "#4285F4", // Slide 4
+    "#34A853", // Slide 5
+    "#FF5C35", // Slide 6
+    "#CC785C", // Slide 7
+    "#20C0C0", // Slide 8
+    "#FF5C35", // Slide 9
+    "#4FFFB0", // Slide 10
+  ];
+
+  return (
+    <>
+      <motion.nav 
+        animate={{ 
+          height: isScrolled ? 64 : 80,
+          backgroundColor: isScrolled ? "rgba(5, 6, 10, 0.8)" : "rgba(5, 6, 10, 0.4)",
+          backdropFilter: isScrolled ? "blur(20px)" : "blur(10px)"
+        }}
+        className="fixed top-0 left-0 w-full z-50 glass-nav flex items-center justify-between px-6 md:px-12"
+      >
+        <div className="flex items-center gap-3">
+          <motion.div 
+            animate={{ scale: isScrolled ? 0.8 : 1 }}
+            className="w-8 h-8 bg-aqua rounded flex items-center justify-center shrink-0"
+          >
+            <Sparkles className="w-5 h-5 text-bg-dark" />
+          </motion.div>
+          <motion.span 
+            animate={{ fontSize: isScrolled ? "1.25rem" : "1.5rem" }}
+            className="font-display tracking-wider pt-1 whitespace-nowrap"
+          >
+            MGC — Next Fit
+          </motion.span>
+        </div>
+
+        <div className="hidden md:flex items-center gap-6">
+          <div className="flex gap-2">
+            {Array.from({ length: totalSlides }).map((_, i) => (
+              <div 
+                key={i} 
+                className={`h-1.5 w-1.5 transition-all duration-500 rounded-full ${i === currentSlide ? 'dot-active scale-125' : 'bg-white/20'}`}
+              />
+            ))}
+          </div>
+          <span className="font-mono text-sm opacity-50">
+            {String(currentSlide + 1).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
+          </span>
+        </div>
+
+        <motion.button 
+          animate={{ scale: isScrolled ? 0.9 : 1 }}
+          className="bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-full font-mono text-xs transition-all shrink-0"
+        >
+          LIVE SESSION
+        </motion.button>
+      </motion.nav>
+
+      {/* Scroll Progress Bar */}
+      <motion.div 
+        animate={{ top: isScrolled ? 64 : 80 }}
+        className="fixed left-0 w-full z-50 h-px bg-white/5"
+      >
+        <motion.div 
+          className="h-full origin-left"
+          style={{ 
+            scaleX: scrollProgress,
+            backgroundColor: accentColors[currentSlide] || "#4FFFB0",
+            boxShadow: `0 0 10px ${accentColors[currentSlide] || "#4FFFB0"}`
+          }}
+        />
+      </motion.div>
+    </>
+  );
+};
+
+export default function App() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ container: containerRef });
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      const scrollPos = containerRef.current.scrollTop;
+      const height = containerRef.current.offsetHeight;
+      const index = Math.round(scrollPos / height);
+      setActiveSlide(index);
+    };
+
+    const container = containerRef.current;
+    container?.addEventListener('scroll', handleScroll);
+    return () => container?.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const slides = [
+    // Slide 1: Capa
+    <Slide key={0} glowColor="rgba(79, 255, 176, 0.1)">
+      <div className="flex flex-col items-center md:items-start space-y-6">
+        <FadeUp>
+          <span className="font-mono text-purple text-sm tracking-[0.3em] uppercase">Momento de Gestão Comercial</span>
+        </FadeUp>
+        <FadeUp delay={0.2}>
+          <h1 className="font-display text-7xl md:text-[9rem] leading-[0.85] text-center md:text-left tracking-tighter">
+            A Produtividade da IA <br />
+            <span className="text-aqua drop-shadow-[0_0_15px_rgba(79,255,176,0.3)]">Aplicada no Comercial</span>
+          </h1>
+        </FadeUp>
+        <FadeUp delay={0.4}>
+          <p className="text-white/50 text-lg md:text-2xl max-w-2xl leading-relaxed text-center md:text-left">
+            Não é sobre tecnologia. É sobre o que o time faz com o <strong>tempo</strong> e o impacto direto no seu <strong>pipeline</strong>.
+          </p>
+        </FadeUp>
+        <FadeUp delay={0.6}>
+          <div className="flex flex-wrap gap-4 pt-4 justify-center md:justify-start">
+            {["Estratégia", "Lideranças", "Next Fit"].map(tag => (
+              <span key={tag} className="px-4 py-1.5 rounded-full border border-border-subtle font-mono text-[10px] uppercase tracking-widest text-white/40">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </FadeUp>
+      </div>
+      <motion.div 
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30"
+      >
+        <span className="font-mono text-[10px] uppercase tracking-widest">Scroll</span>
+        <ChevronDown className="w-4 h-4" />
+      </motion.div>
+    </Slide>,
+
+    // Slide 2: Abertura (O Gancho)
+    <Slide key={1} glowColor="rgba(123, 97, 255, 0.08)">
+      <div className="text-center space-y-12">
+        <FadeUp>
+          <span className="font-mono text-purple text-sm tracking-[0.2em] uppercase">O Recurso mais caro</span>
+        </FadeUp>
+        <FadeUp delay={0.2}>
+          <h2 className="text-4xl md:text-7xl font-sans font-normal max-w-5xl mx-auto leading-tight italic">
+            "Quantas horas por semana o time gasta com tarefas que <span className="text-purple font-medium not-italic underline decoration-purple/30 underline-offset-8">não são vender?</span>"
+          </h2>
+        </FadeUp>
+        <FadeUp delay={0.4}>
+          <div className="max-w-xl mx-auto glass-card p-8 rounded-3xl border-l-4 border-purple italic text-white/70">
+            <p className="text-xl md:text-2xl leading-relaxed text-left">
+              O vendedor caro está fazendo trabalho administrativo. Fiz a conta do desperdício, e o resultado me trouxe aqui.
+            </p>
+          </div>
+        </FadeUp>
+      </div>
+    </Slide>,
+
+    // Slide 3: Contexto (Por que agora?)
+    <Slide key={2} glowColor="rgba(255, 255, 255, 0.1)">
+      <div className="space-y-12">
+        <FadeUp>
+          <h2 className="text-5xl md:text-8xl font-display tracking-tight uppercase">Por que agora?</h2>
+        </FadeUp>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <FadeUp delay={0.2}>
+            <Card 
+              icon={Sparkles} 
+              title="A IA saiu do laboratório" 
+              description="Acesso universal via celular. Tecnologia de ponta do Vale do Silício agora é interface de chat na mão de qualquer SDR."
+              color="#4FFFB0"
+            />
+          </FadeUp>
+          <FadeUp delay={0.4}>
+            <Card 
+              icon={Zap} 
+              color="#FF5C35"
+              title="Os 10% de capacidade" 
+              description="As ferramentas já estão na mesa, muitas já estão pagas. O problema é que usamos apenas 10% do potencial."
+            />
+          </FadeUp>
+        </div>
+      </div>
+    </Slide>,
+
+    // Slide 4: Gargalo 1 (SDR Travado)
+    <Slide key={3} glowColor="rgba(66, 133, 244, 0.12)">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="space-y-8">
+          <FadeUp>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-google-blue/10 border border-google-blue/20 text-google-blue font-mono text-[10px] uppercase mb-4">
+              Gargalo 1: SDR Travado
+            </div>
+            <h2 className="text-5xl md:text-[5rem] font-display leading-[0.9] text-google-blue drop-shadow-[0_0_20px_rgba(66,133,244,0.3)]">
+              Tempo de <br />Resposta
+            </h2>
+            <p className="text-xl text-white/50 max-w-md mt-6 leading-relaxed">
+              O lead esfria enquanto o SDR gasta 15 min pensando no que responder. O Gemini vira o co-piloto que elimina o "vácuo".
+            </p>
+          </FadeUp>
+          
+          <FadeUp delay={0.2}>
+            <div className="glass-card p-6 rounded-2xl border-l-2 border-google-blue">
+              <span className="text-[10px] uppercase font-mono text-white/30 block mb-2">Prompt de Impacto:</span>
+              <p className="text-sm italic text-white/80">"Contorne a objeção: 'Gostei do sistema, mas meu sócio achou a mensalidade puxada agora'."</p>
+            </div>
+          </FadeUp>
+        </div>
+        
+        <StaggerContainer className="grid grid-cols-1 gap-4">
+          <StaggerItem>
+            <div className="glass-card p-6 rounded-2xl flex items-start gap-4">
+              <MessageSquare className="w-6 h-6 text-google-blue shrink-0" />
+              <div>
+                <h4 className="font-bold text-lg mb-1">5 Segundos</h4>
+                <p className="text-sm text-white/40">Tempo para gerar uma resposta personalizada e ética.</p>
+              </div>
+            </div>
+          </StaggerItem>
+          <StaggerItem>
+            <div className="glass-card p-6 rounded-2xl flex items-start gap-4">
+              <CheckCircle2 className="w-6 h-6 text-google-blue shrink-0" />
+              <div>
+                <h4 className="font-bold text-lg mb-1">Timing Preservado</h4>
+                <p className="text-sm text-white/40">Redução drástica no tempo de resposta no WhatsApp.</p>
+              </div>
+            </div>
+          </StaggerItem>
+        </StaggerContainer>
+      </div>
+    </Slide>,
+
+    // Slide 5: Gargalo 2 (Líder sem tempo)
+    <Slide key={4} glowColor="rgba(204, 120, 92, 0.12)">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="order-2 lg:order-1">
+          <StaggerContainer className="grid grid-cols-1 gap-4">
+            <StaggerItem>
+              <div className="glass-card p-8 rounded-3xl border-claude-salmon/20">
+                <Brain className="w-10 h-10 text-claude-salmon mb-4" />
+                <h4 className="text-2xl font-bold mb-2">Seu Par Sênior</h4>
+                <p className="text-white/40 leading-relaxed">Use o Claude para validar hipóteses de queda no Win Rate e testes rápidos com a equipe.</p>
+              </div>
+            </StaggerItem>
+            <StaggerItem>
+              <div className="glass-card p-8 rounded-3xl bg-claude-salmon/5 border-claude-salmon/10 italic">
+                "Não quebre a cabeça sozinho. A IA te dá o rascunho, você coloca a sua vivência."
+              </div>
+            </StaggerItem>
+          </StaggerContainer>
+        </div>
+        
+        <div className="space-y-8 order-1 lg:order-2">
+          <FadeUp>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-claude-salmon/10 border border-claude-salmon/20 text-claude-salmon font-mono text-[10px] uppercase mb-4">
+              Gargalo 2: Líder Operacional
+            </div>
+            <h2 className="text-5xl md:text-[5rem] font-display leading-[0.9] text-claude-salmon drop-shadow-[0_0_20px_rgba(204,120,92,0.3)]">
+              Tempo de <br />Estratégia
+            </h2>
+            <p className="text-xl text-white/50 max-w-md mt-6 leading-relaxed">
+              O operacional consome o dia. O Claude atua como um parceiro de diretoria para analisar cenários de churn e resgate.
+            </p>
+          </FadeUp>
+        </div>
+      </div>
+    </Slide>,
+
+    // Slide 6: Gargalo 3 (Liderança sem treinar)
+    <Slide key={5} glowColor="rgba(255, 92, 53, 0.12)">
+      <div className="space-y-12">
+        <div className="flex flex-col md:flex-row gap-8 items-start justify-between">
+          <FadeUp className="max-w-xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gamma-orange/10 border border-gamma-orange/20 text-gamma-orange font-mono text-[10px] uppercase mb-6">
+              Gargalo 3: Falta de Treinamento
+            </div>
+            <h2 className="text-5xl md:text-[5rem] font-display leading-[0.9] text-gamma-orange drop-shadow-[0_0_20px_rgba(255,92,53,0.3)]">
+              Cultura de <br />Execução
+            </h2>
+            <p className="text-xl text-white/50 mt-6 leading-relaxed">
+              Treinar cansa e consome tempo de criação. O Gamma e NotebookLM criam materiais e apresentações de MGC em minutos.
+            </p>
+          </FadeUp>
+          
+          <FadeUp delay={0.2} className="w-full md:w-auto">
+            <div className="glass-card p-8 rounded-3xl bg-gamma-orange/5 border-gamma-orange/10 max-w-sm">
+              <Zap className="w-8 h-8 text-gamma-orange mb-4 animate-pulse" />
+              <p className="text-sm text-white/60 leading-relaxed italic">
+                "Nosso trabalho é definir a mensagem. O trabalho de mastigar slides e resumos é da máquina."
+              </p>
+            </div>
+          </FadeUp>
+        </div>
+
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <StaggerItem>
+            <div className="glass-card p-6 rounded-2xl border border-white/5 flex gap-5 items-center">
+              <div className="w-12 h-12 rounded-xl bg-gamma-orange/10 flex items-center justify-center shrink-0">
+                <Monitor className="w-6 h-6 text-gamma-orange" />
+              </div>
+              <div>
+                <h4 className="font-bold">Gamma</h4>
+                <p className="text-xs text-white/40">Slides prontos em 2 min para diretoria ou time.</p>
+              </div>
+            </div>
+          </StaggerItem>
+          <StaggerItem>
+            <div className="glass-card p-6 rounded-2xl border border-white/5 flex gap-5 items-center">
+              <div className="w-12 h-12 rounded-xl bg-notebook-green/10 flex items-center justify-center shrink-0">
+                <BookOpen className="w-6 h-6 text-notebook-green" />
+              </div>
+              <div>
+                <h4 className="font-bold">NotebookLM</h4>
+                <p className="text-xs text-white/40">Transforma manuais densos em podcasts de estudo.</p>
+              </div>
+            </div>
+          </StaggerItem>
+        </StaggerContainer>
+      </div>
+    </Slide>,
+
+    // Slide 7: Honestidade (O que a IA NÃO faz)
+    <Slide key={6} glowColor="rgba(255, 255, 255, 0.05)">
+      <div className="space-y-12">
+        <FadeUp>
+          <h2 className="text-5xl md:text-8xl font-display leading-tight tracking-tight uppercase">O que a IA <span className="text-purple opacity-50">NÃO</span> faz</h2>
+        </FadeUp>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            { t: "Não substitui Julgamento", d: "Ela não lê a sala nem entende a pausa emocional no telefone. O senso crítico é seu." },
+            { t: "Não cria Relação", d: "Venda é confiança. Pessoas compram de pessoas. O olho no olho é insubstituível." },
+            { t: "Não salva processo ruim", d: "Se o seu método for ruim, a IA só miltiplica o erro. Multiplicar zero resulta em zero." }
+          ].map((item, i) => (
+            <FadeUp key={item.t} delay={0.2 + i * 0.1}>
+              <div className="flex gap-4">
+                <XCircle className="w-6 h-6 text-purple shrink-0 mt-1" />
+                <div>
+                  <h4 className="text-xl font-medium mb-2">{item.t}</h4>
+                  <p className="text-white/40 text-sm leading-relaxed">{item.d}</p>
+                </div>
+              </div>
+            </FadeUp>
+          ))}
+        </div>
+
+        <FadeUp delay={0.6}>
+          <div className="text-center py-12 border-y border-white/5">
+            <p className="text-3xl md:text-5xl font-sans leading-tight">
+              "A IA não vai salvar um vendedor sem processo. <br />
+              <span className="text-aqua">Mas vai multiplicar o bom vendedor que já temos.</span>"
+            </p>
+          </div>
+        </FadeUp>
+      </div>
+    </Slide>,
+
+    // Slide 8: Fechamento (Plano de Ação)
+    <Slide key={7} glowColor="rgba(79, 255, 176, 0.1)">
+      <div className="space-y-12">
+        <FadeUp>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-aqua/10 border border-aqua/20 text-aqua font-mono text-[10px] uppercase mb-4">
+            Plano de Ação de 3 Passos
+          </div>
+          <h2 className="text-5xl md:text-8xl font-display leading-[0.95] tracking-tight">O DIFERENCIAL É <br /><span className="text-aqua">QUEM COMEÇA.</span></h2>
+        </FadeUp>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { n: "01", t: "Ache o seu Gargalo", d: "Pare de olhar para as IAs e olhe para sua operação agora. Onde o ralo de tempo é maior?" },
+            { n: "02", t: "Escolha UMA ferramenta", d: "Não tente aplicar tudo. Se o problema é SDR, foque no Gemini. Se é treinamento, Gamma." },
+            { n: "03", t: "Piloto de 7 Dias", d: "Escolha os 2 vendedores mais rápidos. Teste, meça a taxa de resposta e depois escale." }
+          ].map((step, i) => (
+            <FadeUp key={step.n} delay={0.2 + i * 0.2}>
+              <div className="glass-card p-10 h-full rounded-3xl relative overflow-hidden group border-white/5 hover:border-aqua/30 transition-all">
+                <span className="font-display text-8xl absolute -right-4 -bottom-6 text-white/[0.03] group-hover:text-aqua/5 transition-colors">{step.n}</span>
+                <h4 className="text-2xl font-bold mb-4">{step.t}</h4>
+                <p className="text-white/40 leading-relaxed">{step.d}</p>
+              </div>
+            </FadeUp>
+          ))}
+        </div>
+
+        <FadeUp delay={0.8} className="flex justify-center md:justify-start">
+          <button className="flex items-center gap-3 px-12 py-5 bg-aqua text-bg-dark rounded-full font-bold text-xl hover:scale-105 transition-all shadow-[0_0_30px_rgba(79,255,176,0.3)] group">
+            Começar Piloto amanha
+            <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+          </button>
+        </FadeUp>
+      </div>
+    </Slide>
+  ];
+
+  return (
+    <div className="bg-bg-dark text-white selection:bg-aqua/20 selection:text-aqua">
+      <Header currentSlide={activeSlide} totalSlides={slides.length} scrollProgress={scaleX} />
+      <main ref={containerRef} className="snap-container">
+        {slides}
+      </main>
+
+      {/* Slide Navigation Dots (Vertical) */}
+      <div className="fixed right-6 md:right-12 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-40 hidden md:flex">
+        {Array.from({ length: slides.length }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => {
+              containerRef.current?.scrollTo({
+                top: i * containerRef.current.offsetHeight,
+                behavior: 'smooth'
+              });
+            }}
+            className="group flex items-center justify-end gap-3"
+          >
+            <span className={`font-mono text-[10px] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap ${activeSlide === i ? 'text-aqua opacity-100' : 'text-white/40'}`}>
+              SLIDE {String(i + 1).padStart(2, '0')}
+            </span>
+            <div 
+              className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${activeSlide === i ? 'dot-active scale-125' : 'bg-white/20 hover:bg-white/40'}`}
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
