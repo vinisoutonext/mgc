@@ -4,22 +4,7 @@
  */
 
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'motion/react';
-import { 
-  Sparkles, 
-  BookOpen, 
-  Zap, 
-  MessageSquare, 
-  Search, 
-  XCircle, 
-  ArrowRight,
-  Monitor,
-  Video,
-  Users,
-  Brain,
-  Layers,
-  CheckCircle2,
-  ChevronDown
-} from 'lucide-react';
+import { Sparkles, BookOpen, Zap, MessageSquare, Search, Circle as XCircle, ArrowRight, Monitor, Video, Users, Brain, Layers, CircleCheck as CheckCircle2, ChevronDown, Mic, Dumbbell, UserSearch, Swords, FileText } from 'lucide-react';
 import React, { useState, useEffect, useRef, type ReactNode } from 'react';
 
 // --- Constants & Types ---
@@ -354,8 +339,129 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 5: Gargalo 2 (Líder sem tempo)
-    <Slide key={4} glowColor="rgba(204, 120, 92, 0.12)">
+    // Slide 5: Raio-X Arsenal SDR WhatsApp
+    <Slide key={4} glowColor="rgba(66, 133, 244, 0.08)">
+      <div className="space-y-10">
+        <FadeUp>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-google-blue/10 border border-google-blue/20 text-google-blue font-mono text-[10px] uppercase mb-4">
+            Raio-X: Arsenal do SDR
+          </div>
+          <h2 className="text-5xl md:text-[5rem] font-display leading-[0.9] text-google-blue drop-shadow-[0_0_20px_rgba(66,133,244,0.3)]">
+            O Gemini vai <br />muito além.
+          </h2>
+          <p className="text-xl text-white/50 max-w-2xl mt-4 leading-relaxed">
+            Responder rápido é só o começo. Veja o que o Gemini faz pelo SDR no WhatsApp antes, durante e depois da conversa.
+          </p>
+        </FadeUp>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <FadeUp delay={0.2}>
+            <div className="glass-card glass-card-hover p-8 rounded-3xl group h-full border-google-blue/10 hover:border-google-blue/30">
+              <UserSearch className="w-8 h-8 mb-4 text-google-blue opacity-60 group-hover:opacity-100 transition-opacity" />
+              <h3 className="text-xl font-semibold mb-3">Desenterrar Leads</h3>
+              <p className="text-white/50 text-sm leading-relaxed mb-5">O lead visualizou e sumiu há 5 dias? Gere uma mensagem de quebra de padrão em segundos.</p>
+              <div className="glass-card p-4 rounded-xl border-l-2 border-google-blue/40">
+                <span className="text-[9px] uppercase font-mono text-white/30 block mb-1">Prompt</span>
+                <p className="text-xs italic text-white/70 leading-snug">"O lead visualizou e ignorou há 5 dias. Crie uma mensagem curta de quebra de padrão para o WhatsApp."</p>
+              </div>
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={0.35}>
+            <div className="glass-card glass-card-hover p-8 rounded-3xl group h-full border-google-blue/10 hover:border-google-blue/30">
+              <Mic className="w-8 h-8 mb-4 text-google-blue opacity-60 group-hover:opacity-100 transition-opacity" />
+              <h3 className="text-xl font-semibold mb-3">Resumo de Áudio Longo</h3>
+              <p className="text-white/50 text-sm leading-relaxed mb-5">Sabe aquele áudio de 3 minutos do cliente contando a vida? A IA extrai os 3 pontos de dor em segundos, sem você ouvir tudo.</p>
+              <div className="glass-card p-4 rounded-xl bg-google-blue/5">
+                <p className="text-xs text-white/50 leading-snug">Transcreva o áudio e peça ao Gemini: <span className="text-google-blue italic">"Liste as 3 principais objeções ou dores mencionadas."</span></p>
+              </div>
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={0.5}>
+            <div className="glass-card glass-card-hover p-8 rounded-3xl group h-full border-google-blue/10 hover:border-google-blue/30">
+              <Dumbbell className="w-8 h-8 mb-4 text-google-blue opacity-60 group-hover:opacity-100 transition-opacity" />
+              <h3 className="text-xl font-semibold mb-3">Roleplay de Negociação</h3>
+              <p className="text-white/50 text-sm leading-relaxed mb-5">Treine o contorno de objeção simulando o WhatsApp do cliente antes de mandar a mensagem real. Erre com a IA, não com o lead.</p>
+              <div className="glass-card p-4 rounded-xl border-l-2 border-google-blue/40">
+                <span className="text-[9px] uppercase font-mono text-white/30 block mb-1">Prompt</span>
+                <p className="text-xs italic text-white/70 leading-snug">"Simule ser um cliente resistente a preço. Responda como ele responderia no WhatsApp."</p>
+              </div>
+            </div>
+          </FadeUp>
+        </div>
+      </div>
+    </Slide>,
+
+    // Slide 6: Antes x Depois no WhatsApp
+    <Slide key={5} glowColor="rgba(79, 255, 176, 0.06)">
+      <div className="space-y-10">
+        <FadeUp>
+          <h2 className="text-5xl md:text-7xl font-display tracking-tight uppercase leading-none">
+            Antes <span className="text-white/20">x</span> Depois
+          </h2>
+          <p className="text-xl text-white/50 mt-4">Show, don't tell. A diferença está na mensagem.</p>
+        </FadeUp>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          {/* Sem IA */}
+          <FadeUp delay={0.2}>
+            <div className="glass-card p-8 rounded-3xl h-full border border-red-500/20 bg-red-500/[0.03]">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]" />
+                <span className="font-mono text-xs uppercase tracking-widest text-red-400">Sem IA — O "Textão"</span>
+              </div>
+              <div className="glass-card p-5 rounded-2xl bg-white/[0.02] border-white/5">
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-white/10 shrink-0 flex items-center justify-center text-xs font-bold">S</div>
+                  <div className="flex-1">
+                    <span className="text-[10px] font-mono text-white/30 block mb-2">SDR — agora</span>
+                    <div className="bg-google-blue/20 rounded-2xl rounded-tl-sm p-4 text-sm text-white/70 leading-relaxed">
+                      Olá João tudo bom? Sou da Next Fit e quero apresentar nosso sistema completo de gestão de academia com controle financeiro módulo de treinos agendamento de aulas fichas de alunos controle de frequência relatórios de inadimplência e muito mais temos planos a partir de R$299 por mês e fazemos treinamento completo temos suporte 24h e já atendemos mais de 500 academias no Brasil inteiro quer que eu mande o link do nosso site para você ver tudo?
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 flex gap-2 flex-wrap">
+                <span className="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-[10px] font-mono">Focado no produto</span>
+                <span className="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-[10px] font-mono">Sem respiro</span>
+                <span className="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-[10px] font-mono">Panfleto digital</span>
+              </div>
+            </div>
+          </FadeUp>
+
+          {/* Com IA */}
+          <FadeUp delay={0.4}>
+            <div className="glass-card p-8 rounded-3xl h-full border border-aqua/20 bg-aqua/[0.02]">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-3 h-3 rounded-full bg-aqua shadow-[0_0_8px_rgba(79,255,176,0.6)]" />
+                <span className="font-mono text-xs uppercase tracking-widest text-aqua">Com IA — Conversacional</span>
+              </div>
+              <div className="glass-card p-5 rounded-2xl bg-white/[0.02] border-white/5">
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-white/10 shrink-0 flex items-center justify-center text-xs font-bold">S</div>
+                  <div className="flex-1">
+                    <span className="text-[10px] font-mono text-white/30 block mb-2">SDR — agora</span>
+                    <div className="bg-google-blue/20 rounded-2xl rounded-tl-sm p-4 text-sm text-white/90 leading-relaxed">
+                      Fala João, vi que a taxa de evasão dos alunos é seu maior problema hoje.<br /><br />
+                      Posso te mostrar como o Next Fit automatiza essa retenção?
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 flex gap-2 flex-wrap">
+                <span className="px-3 py-1 rounded-full bg-aqua/10 text-aqua text-[10px] font-mono">Focado na dor</span>
+                <span className="px-3 py-1 rounded-full bg-aqua/10 text-aqua text-[10px] font-mono">2 linhas</span>
+                <span className="px-3 py-1 rounded-full bg-aqua/10 text-aqua text-[10px] font-mono">Gera curiosidade</span>
+              </div>
+            </div>
+          </FadeUp>
+        </div>
+      </div>
+    </Slide>,
+
+    // Slide 7: Gargalo 2 (Líder sem tempo)
+    <Slide key={7} glowColor="rgba(204, 120, 92, 0.12)">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="order-2 lg:order-1">
           <StaggerContainer className="grid grid-cols-1 gap-4">
@@ -373,7 +479,7 @@ export default function App() {
             </StaggerItem>
           </StaggerContainer>
         </div>
-        
+
         <div className="space-y-8 order-1 lg:order-2">
           <FadeUp>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-claude-salmon/10 border border-claude-salmon/20 text-claude-salmon font-mono text-[10px] uppercase mb-4">
@@ -390,8 +496,94 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 6: Gargalo 3 (Liderança sem treinar)
-    <Slide key={5} glowColor="rgba(255, 92, 53, 0.12)">
+    // Slide 8: O Ringue — Gemini vs Claude
+    <Slide key={8} glowColor="rgba(150, 100, 80, 0.1)">
+      <div className="space-y-10">
+        <FadeUp>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50 font-mono text-[10px] uppercase mb-4">
+            Escolha a arma certa
+          </div>
+          <h2 className="text-5xl md:text-7xl font-display tracking-tight uppercase leading-none">
+            O Ringue: <br />
+            <span className="text-google-blue">Gemini</span> <span className="text-white/20">vs</span> <span className="text-claude-salmon">Claude</span>
+          </h2>
+          <p className="text-xl text-white/50 mt-4 max-w-2xl leading-relaxed">
+            Não são concorrentes — são especialistas. Saber qual usar em cada momento é o diferencial do líder.
+          </p>
+        </FadeUp>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          {/* Gemini */}
+          <FadeUp delay={0.2}>
+            <div className="glass-card p-8 rounded-3xl h-full border border-google-blue/20 bg-google-blue/[0.03]">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-google-blue/10 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-google-blue" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-display text-google-blue tracking-wide">GEMINI</h3>
+                  <span className="text-[10px] font-mono uppercase text-white/40">Agilidade no campo</span>
+                </div>
+              </div>
+              <ul className="space-y-3 mb-6">
+                <li className="flex gap-3 items-start">
+                  <CheckCircle2 className="w-4 h-4 text-google-blue shrink-0 mt-0.5" />
+                  <span className="text-sm text-white/70">Acesso à internet em tempo real</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <CheckCircle2 className="w-4 h-4 text-google-blue shrink-0 mt-0.5" />
+                  <span className="text-sm text-white/70">Pesquisa leads antes da abordagem</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <CheckCircle2 className="w-4 h-4 text-google-blue shrink-0 mt-0.5" />
+                  <span className="text-sm text-white/70">Gera respostas rápidas para WhatsApp</span>
+                </li>
+              </ul>
+              <div className="glass-card p-4 rounded-xl border-l-2 border-google-blue/50">
+                <span className="text-[9px] uppercase font-mono text-white/30 block mb-1">Caso de Uso Ideal</span>
+                <p className="text-xs italic text-white/70 leading-snug">"Pesquise a academia do lead no Instagram e me dê um gancho para puxar assunto no WhatsApp."</p>
+              </div>
+            </div>
+          </FadeUp>
+
+          {/* Claude */}
+          <FadeUp delay={0.4}>
+            <div className="glass-card p-8 rounded-3xl h-full border border-claude-salmon/20 bg-claude-salmon/[0.03]">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-claude-salmon/10 flex items-center justify-center">
+                  <Brain className="w-5 h-5 text-claude-salmon" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-display text-claude-salmon tracking-wide">CLAUDE</h3>
+                  <span className="text-[10px] font-mono uppercase text-white/40">Profundidade na estratégia</span>
+                </div>
+              </div>
+              <ul className="space-y-3 mb-6">
+                <li className="flex gap-3 items-start">
+                  <CheckCircle2 className="w-4 h-4 text-claude-salmon shrink-0 mt-0.5" />
+                  <span className="text-sm text-white/70">Raciocínio complexo e contextual</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <CheckCircle2 className="w-4 h-4 text-claude-salmon shrink-0 mt-0.5" />
+                  <span className="text-sm text-white/70">Analisa documentos e históricos longos</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <CheckCircle2 className="w-4 h-4 text-claude-salmon shrink-0 mt-0.5" />
+                  <span className="text-sm text-white/70">Identifica padrões em vendas perdidas</span>
+                </li>
+              </ul>
+              <div className="glass-card p-4 rounded-xl border-l-2 border-claude-salmon/50">
+                <span className="text-[9px] uppercase font-mono text-white/30 block mb-1">Caso de Uso Ideal</span>
+                <p className="text-xs italic text-white/70 leading-snug">"Exportei o histórico de conversa do WhatsApp (TXT) de uma venda perdida. Analise onde o SDR errou na condução."</p>
+              </div>
+            </div>
+          </FadeUp>
+        </div>
+      </div>
+    </Slide>,
+
+    // Slide 9: Gargalo 3 (Liderança sem treinar)
+    <Slide key={9} glowColor="rgba(255, 92, 53, 0.12)">
       <div className="space-y-12">
         <div className="flex flex-col md:flex-row gap-8 items-start justify-between">
           <FadeUp className="max-w-xl">
@@ -443,8 +635,100 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 7: Honestidade (O que a IA NÃO faz)
-    <Slide key={6} glowColor="rgba(255, 255, 255, 0.05)">
+    // Slide 10: NotebookLM — O Clone do Produto
+    <Slide key={10} glowColor="rgba(52, 168, 83, 0.1)">
+      <div className="space-y-10">
+        <FadeUp>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-notebook-green/10 border border-notebook-green/20 text-notebook-green font-mono text-[10px] uppercase mb-4">
+            NotebookLM na prática
+          </div>
+          <h2 className="text-5xl md:text-7xl font-display leading-[0.9] text-notebook-green drop-shadow-[0_0_20px_rgba(52,168,83,0.3)] uppercase">
+            O Clone <br />do Produto.
+          </h2>
+          <p className="text-xl text-white/50 mt-4 max-w-2xl leading-relaxed">
+            A resposta exata, com o cliente na linha.
+          </p>
+        </FadeUp>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          {/* Setup */}
+          <FadeUp delay={0.2}>
+            <div className="space-y-4">
+              <h3 className="text-white/40 font-mono text-xs uppercase tracking-widest mb-4">A liderança faz o upload uma vez:</h3>
+              <StaggerContainer className="space-y-3">
+                {[
+                  { icon: BookOpen, label: "Manual do Next Fit", desc: "Funcionalidades, fluxos e integrações" },
+                  { icon: FileText, label: "Regras de Negócio", desc: "Planos, condições especiais e política comercial" },
+                  { icon: Layers, label: "Tabela de Preços", desc: "Todos os planos e comparativos atualizados" }
+                ].map(({ icon: Icon, label, desc }) => (
+                  <StaggerItem key={label}>
+                    <div className="glass-card p-5 rounded-2xl flex items-center gap-4 border-notebook-green/10 hover:border-notebook-green/30 transition-colors">
+                      <div className="w-10 h-10 rounded-xl bg-notebook-green/10 flex items-center justify-center shrink-0">
+                        <Icon className="w-5 h-5 text-notebook-green" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-sm">{label}</h4>
+                        <p className="text-xs text-white/40">{desc}</p>
+                      </div>
+                    </div>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          </FadeUp>
+
+          {/* Caso de uso */}
+          <FadeUp delay={0.4}>
+            <div className="glass-card p-8 rounded-3xl border-notebook-green/20 bg-notebook-green/[0.03] h-full">
+              <div className="flex items-center gap-2 mb-6">
+                <div className="w-2 h-2 rounded-full bg-notebook-green animate-pulse" />
+                <span className="font-mono text-xs text-notebook-green uppercase tracking-widest">Caso de uso real</span>
+              </div>
+
+              <div className="space-y-4">
+                {/* Lead pergunta */}
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-white/10 shrink-0 flex items-center justify-center text-xs font-bold">J</div>
+                  <div>
+                    <span className="text-[10px] font-mono text-white/30 block mb-1">João (Lead) — agora</span>
+                    <div className="bg-white/10 rounded-2xl rounded-tl-sm p-3 text-sm text-white/80 leading-relaxed max-w-xs">
+                      Mas o sistema integra com a maquininha Stone e exporta para o meu contador no formato SPED?
+                    </div>
+                  </div>
+                </div>
+
+                {/* SDR consulta */}
+                <div className="glass-card p-4 rounded-xl border-notebook-green/20 bg-notebook-green/5 flex gap-3 items-start">
+                  <Search className="w-4 h-4 text-notebook-green shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-[9px] font-mono text-notebook-green/70 block mb-1">SDR pergunta ao NotebookLM</span>
+                    <p className="text-xs italic text-white/60">"Next Fit integra com Stone e exporta SPED?"</p>
+                  </div>
+                </div>
+
+                {/* NotebookLM responde */}
+                <div className="flex items-start gap-3 justify-end">
+                  <div>
+                    <span className="text-[10px] font-mono text-white/30 block mb-1 text-right">NotebookLM — 3 segundos</span>
+                    <div className="bg-notebook-green/20 rounded-2xl rounded-tr-sm p-3 text-sm text-white/90 leading-relaxed max-w-xs text-right">
+                      Sim. Integra nativo com Stone (pag. 14 do Manual). Export SPED disponível no modulo Financeiro (pag. 31).
+                    </div>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-notebook-green/20 shrink-0 flex items-center justify-center text-xs font-bold text-notebook-green">N</div>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-white/5">
+                <p className="text-sm text-white/50 leading-relaxed">A venda <span className="text-notebook-green font-semibold">não esfria</span>. O SDR não interrompe o gerente. O cliente recebe a resposta certa, na hora certa.</p>
+              </div>
+            </div>
+          </FadeUp>
+        </div>
+      </div>
+    </Slide>,
+
+    // Slide 11: Honestidade (O que a IA NÃO faz)
+    <Slide key={11} glowColor="rgba(255, 255, 255, 0.05)">
       <div className="space-y-12">
         <FadeUp>
           <h2 className="text-5xl md:text-8xl font-display leading-tight tracking-tight uppercase">O que a IA <span className="text-purple opacity-50">NÃO</span> faz</h2>
@@ -479,8 +763,8 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 8: Fechamento (Plano de Ação)
-    <Slide key={7} glowColor="rgba(79, 255, 176, 0.1)">
+    // Slide 12: Fechamento (Plano de Ação)
+    <Slide key={12} glowColor="rgba(79, 255, 176, 0.1)">
       <div className="space-y-12">
         <FadeUp>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-aqua/10 border border-aqua/20 text-aqua font-mono text-[10px] uppercase mb-4">
