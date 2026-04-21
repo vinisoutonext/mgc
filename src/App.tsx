@@ -107,14 +107,15 @@ const Header = ({ currentSlide, totalSlides, scrollProgress }: { currentSlide: n
   const accentColors = [
     "#4FFFB0", // Slide 1
     "#7B61FF", // Slide 2
-    "#FFFFFF", // Slide 3
-    "#4285F4", // Slide 4
-    "#34A853", // Slide 5
-    "#FF5C35", // Slide 6
-    "#CC785C", // Slide 7
-    "#20C0C0", // Slide 8
-    "#FF5C35", // Slide 9
-    "#4FFFB0", // Slide 10
+    "#4285F4", // Slide 3 - Gargalo 1
+    "#4285F4", // Slide 4 - Raio-X
+    "#4FFFB0", // Slide 5 - Antes x Depois
+    "#CC785C", // Slide 6 - Gargalo 2
+    "#20C0C0", // Slide 7 - Ringue
+    "#FF5C35", // Slide 8 - Gargalo 3
+    "#34A853", // Slide 9 - NotebookLM
+    "#FFFFFF", // Slide 10 - O que a IA NÃO faz
+    "#4FFFB0", // Slide 11 - Plano de Ação
   ];
 
   return (
@@ -156,12 +157,6 @@ const Header = ({ currentSlide, totalSlides, scrollProgress }: { currentSlide: n
           </span>
         </div>
 
-        <motion.button 
-          animate={{ scale: isScrolled ? 0.9 : 1 }}
-          className="bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-full font-mono text-xs transition-all shrink-0"
-        >
-          LIVE SESSION
-        </motion.button>
       </motion.nav>
 
       {/* Scroll Progress Bar */}
@@ -224,15 +219,6 @@ export default function App() {
             Não é sobre tecnologia. É sobre o que o time faz com o <strong>tempo</strong> e o impacto direto no seu <strong>pipeline</strong>.
           </p>
         </FadeUp>
-        <FadeUp delay={0.6}>
-          <div className="flex flex-wrap gap-4 pt-4 justify-center md:justify-start">
-            {["Estratégia", "Lideranças", "Next Fit"].map(tag => (
-              <span key={tag} className="px-4 py-1.5 rounded-full border border-border-subtle font-mono text-[10px] uppercase tracking-widest text-white/40">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </FadeUp>
       </div>
       <motion.div 
         animate={{ y: [0, 10, 0] }}
@@ -265,82 +251,69 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 3: Contexto (Por que agora?)
-    <Slide key={2} glowColor="rgba(255, 255, 255, 0.1)">
-      <div className="space-y-12">
-        <FadeUp>
-          <h2 className="text-5xl md:text-8xl font-display tracking-tight uppercase">Por que agora?</h2>
-        </FadeUp>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <FadeUp delay={0.2}>
-            <Card 
-              icon={Sparkles} 
-              title="A IA saiu do laboratório" 
-              description="Acesso universal via celular. Tecnologia de ponta do Vale do Silício agora é interface de chat na mão de qualquer SDR."
-              color="#4FFFB0"
-            />
-          </FadeUp>
-          <FadeUp delay={0.4}>
-            <Card 
-              icon={Zap} 
-              color="#FF5C35"
-              title="Os 10% de capacidade" 
-              description="As ferramentas já estão na mesa, muitas já estão pagas. O problema é que usamos apenas 10% do potencial."
-            />
-          </FadeUp>
-        </div>
-      </div>
-    </Slide>,
-
-    // Slide 4: Gargalo 1 (SDR Travado)
-    <Slide key={3} glowColor="rgba(66, 133, 244, 0.12)">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div className="space-y-8">
-          <FadeUp>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-google-blue/10 border border-google-blue/20 text-google-blue font-mono text-[10px] uppercase mb-4">
+    // Slide 3: Gargalo 1 (SDR Travado) — Redesigned
+    <Slide key={2} glowColor="rgba(66, 133, 244, 0.15)">
+      <div className="flex flex-col justify-center items-center text-center space-y-12">
+        {/* Problem Statement - Big and Bold */}
+        <FadeUp className="w-full max-w-4xl">
+          <div className="space-y-4 mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-google-blue/15 border border-google-blue/30 text-google-blue font-mono text-[10px] uppercase mb-2">
               Gargalo 1: SDR Travado
             </div>
-            <h2 className="text-5xl md:text-[5rem] font-display leading-[0.9] text-google-blue drop-shadow-[0_0_20px_rgba(66,133,244,0.3)]">
-              Tempo de <br />Resposta
+            <h2 className="text-6xl md:text-[7rem] font-display leading-[0.95] font-black tracking-tight">
+              O Lead<br />
+              <span className="text-google-blue drop-shadow-[0_0_30px_rgba(66,133,244,0.4)]">Esfria</span>
             </h2>
-            <p className="text-xl text-white/50 max-w-md mt-6 leading-relaxed">
-              O lead esfria enquanto o SDR gasta 15 min pensando no que responder. O Gemini vira o co-piloto que elimina o "vácuo".
+          </div>
+
+          <div className="glass-card p-8 md:p-10 rounded-3xl border border-red-500/20 bg-red-500/5 max-w-2xl mx-auto mb-8">
+            <p className="text-2xl md:text-3xl font-sans leading-relaxed text-white/90 italic">
+              O SDR gasta <span className="font-bold text-red-400">15 minutos</span> pensando no que responder.<br />
+              <span className="text-white/50">O lead visualizou a mensagem e sumiu.</span>
             </p>
-          </FadeUp>
-          
-          <FadeUp delay={0.2}>
-            <div className="glass-card p-6 rounded-2xl border-l-2 border-google-blue">
-              <span className="text-[10px] uppercase font-mono text-white/30 block mb-2">Prompt de Impacto:</span>
-              <p className="text-sm italic text-white/80">"Contorne a objeção: 'Gostei do sistema, mas meu sócio achou a mensalidade puxada agora'."</p>
+          </div>
+        </FadeUp>
+
+        {/* Solution Block */}
+        <FadeUp delay={0.3} className="w-full max-w-4xl">
+          <div className="glass-card p-10 md:p-12 rounded-3xl border-2 border-google-blue/40 bg-google-blue/[0.08]">
+            <div className="flex items-center gap-3 mb-6">
+              <Zap className="w-8 h-8 text-google-blue" />
+              <span className="font-mono text-sm text-google-blue uppercase tracking-widest font-bold">Solução com Gemini</span>
             </div>
-          </FadeUp>
-        </div>
-        
-        <StaggerContainer className="grid grid-cols-1 gap-4">
-          <StaggerItem>
-            <div className="glass-card p-6 rounded-2xl flex items-start gap-4">
-              <MessageSquare className="w-6 h-6 text-google-blue shrink-0" />
-              <div>
-                <h4 className="font-bold text-lg mb-1">5 Segundos</h4>
-                <p className="text-sm text-white/40">Tempo para gerar uma resposta personalizada e ética.</p>
+
+            {/* Prompt Card */}
+            <div className="bg-white/[0.03] rounded-2xl p-6 mb-6 border border-google-blue/20">
+              <span className="text-[9px] uppercase font-mono text-white/40 block mb-3">Você pergunta ao Gemini:</span>
+              <p className="text-lg md:text-xl text-white/80 italic leading-relaxed">
+                "Contorne a objeção: <span className="text-google-blue font-semibold">'Gostei do sistema, mas meu sócio achou a mensalidade puxada agora'.</span>"
+              </p>
+            </div>
+
+            {/* Results Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="glass-card p-5 rounded-2xl border border-google-blue/30 bg-google-blue/10">
+                <div className="flex items-center gap-3 mb-2">
+                  <Zap className="w-5 h-5 text-google-blue" />
+                  <span className="font-bold text-white">5 Segundos</span>
+                </div>
+                <p className="text-sm text-white/60">Resposta personalizada gerada em tempo real</p>
+              </div>
+              <div className="glass-card p-5 rounded-2xl border border-google-blue/30 bg-google-blue/10">
+                <div className="flex items-center gap-3 mb-2">
+                  <CheckCircle2 className="w-5 h-5 text-google-blue" />
+                  <span className="font-bold text-white">Timing Preservado</span>
+                </div>
+                <p className="text-sm text-white/60">Lead ainda está lendo, você já tem a resposta</p>
               </div>
             </div>
-          </StaggerItem>
-          <StaggerItem>
-            <div className="glass-card p-6 rounded-2xl flex items-start gap-4">
-              <CheckCircle2 className="w-6 h-6 text-google-blue shrink-0" />
-              <div>
-                <h4 className="font-bold text-lg mb-1">Timing Preservado</h4>
-                <p className="text-sm text-white/40">Redução drástica no tempo de resposta no WhatsApp.</p>
-              </div>
-            </div>
-          </StaggerItem>
-        </StaggerContainer>
+          </div>
+        </FadeUp>
       </div>
     </Slide>,
 
-    // Slide 5: Raio-X Arsenal SDR WhatsApp
-    <Slide key={4} glowColor="rgba(66, 133, 244, 0.08)">
+    // Slide 4: Raio-X Arsenal SDR WhatsApp
+    <Slide key={3} glowColor="rgba(66, 133, 244, 0.08)">
       <div className="space-y-10">
         <FadeUp>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-google-blue/10 border border-google-blue/20 text-google-blue font-mono text-[10px] uppercase mb-4">
@@ -393,8 +366,8 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 6: Antes x Depois no WhatsApp
-    <Slide key={5} glowColor="rgba(79, 255, 176, 0.06)">
+    // Slide 5: Antes x Depois no WhatsApp
+    <Slide key={4} glowColor="rgba(79, 255, 176, 0.06)">
       <div className="space-y-10">
         <FadeUp>
           <h2 className="text-5xl md:text-7xl font-display tracking-tight uppercase leading-none">
@@ -460,8 +433,8 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 7: Gargalo 2 (Líder sem tempo)
-    <Slide key={7} glowColor="rgba(204, 120, 92, 0.12)">
+    // Slide 6: Gargalo 2 (Líder sem tempo)
+    <Slide key={5} glowColor="rgba(204, 120, 92, 0.12)">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="order-2 lg:order-1">
           <StaggerContainer className="grid grid-cols-1 gap-4">
@@ -496,8 +469,8 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 8: O Ringue — Gemini vs Claude
-    <Slide key={8} glowColor="rgba(150, 100, 80, 0.1)">
+    // Slide 7: O Ringue — Gemini vs Claude
+    <Slide key={6} glowColor="rgba(150, 100, 80, 0.1)">
       <div className="space-y-10">
         <FadeUp>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50 font-mono text-[10px] uppercase mb-4">
@@ -582,8 +555,8 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 9: Gargalo 3 (Liderança sem treinar)
-    <Slide key={9} glowColor="rgba(255, 92, 53, 0.12)">
+    // Slide 8: Gargalo 3 (Liderança sem treinar)
+    <Slide key={7} glowColor="rgba(255, 92, 53, 0.12)">
       <div className="space-y-12">
         <div className="flex flex-col md:flex-row gap-8 items-start justify-between">
           <FadeUp className="max-w-xl">
@@ -635,8 +608,8 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 10: NotebookLM — O Clone do Produto
-    <Slide key={10} glowColor="rgba(52, 168, 83, 0.1)">
+    // Slide 9: NotebookLM — O Clone do Produto
+    <Slide key={8} glowColor="rgba(52, 168, 83, 0.1)">
       <div className="space-y-10">
         <FadeUp>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-notebook-green/10 border border-notebook-green/20 text-notebook-green font-mono text-[10px] uppercase mb-4">
@@ -727,8 +700,8 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 11: Honestidade (O que a IA NÃO faz)
-    <Slide key={11} glowColor="rgba(255, 255, 255, 0.05)">
+    // Slide 10: Honestidade (O que a IA NÃO faz)
+    <Slide key={9} glowColor="rgba(255, 255, 255, 0.05)">
       <div className="space-y-12">
         <FadeUp>
           <h2 className="text-5xl md:text-8xl font-display leading-tight tracking-tight uppercase">O que a IA <span className="text-purple opacity-50">NÃO</span> faz</h2>
@@ -763,8 +736,8 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 12: Fechamento (Plano de Ação)
-    <Slide key={12} glowColor="rgba(79, 255, 176, 0.1)">
+    // Slide 11: Fechamento (Plano de Ação)
+    <Slide key={10} glowColor="rgba(79, 255, 176, 0.1)">
       <div className="space-y-12">
         <FadeUp>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-aqua/10 border border-aqua/20 text-aqua font-mono text-[10px] uppercase mb-4">
