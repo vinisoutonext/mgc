@@ -513,39 +513,47 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 6: Gargalo 2 (Líder sem tempo)
-    <Slide key={5} glowColor="rgba(204, 120, 92, 0.12)">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div className="order-2 lg:order-1">
-          <StaggerContainer className="grid grid-cols-1 gap-4">
-            <StaggerItem>
-              <div className="glass-card p-8 rounded-3xl border-claude-salmon/20">
-                <Brain className="w-10 h-10 text-claude-salmon mb-4" />
-                <h4 className="text-2xl font-bold mb-2">Seu Par Sênior</h4>
-                <p className="text-white/40 leading-relaxed">Use o Claude para validar hipóteses de queda no Win Rate e testes rápidos com a equipe.</p>
-              </div>
-            </StaggerItem>
-            <StaggerItem>
-              <div className="glass-card p-8 rounded-3xl bg-claude-salmon/5 border-claude-salmon/10 italic">
-                "Não quebre a cabeça sozinho. A IA te dá o rascunho, você coloca a sua vivência."
-              </div>
-            </StaggerItem>
-          </StaggerContainer>
-        </div>
+    // Slide 6: Gargalo 2 (Líder sem tempo) — War Room
+    <Slide key={5} glowColor="rgba(204, 120, 92, 0.15)">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        {/* Left Side */}
+        <FadeUp className="space-y-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-claude-salmon/10 border border-claude-salmon/20 text-claude-salmon font-mono text-[10px] uppercase mb-4">
+            Gargalo 2: Líder Operacional
+          </div>
+          <h2 className="text-5xl md:text-7xl font-display leading-[0.95] font-black tracking-tight">
+            TEMPO DE<br />
+            <span className="text-claude-salmon drop-shadow-[0_0_30px_rgba(204,120,92,0.5)]">ESTRATÉGIA</span>
+          </h2>
+          <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-md italic">
+            O Claude atua como <span className="font-semibold">Cientista de Dados</span> e <span className="font-semibold">Parceiro de Diretoria</span>.
+          </p>
+        </FadeUp>
 
-        <div className="space-y-8 order-1 lg:order-2">
-          <FadeUp>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-claude-salmon/10 border border-claude-salmon/20 text-claude-salmon font-mono text-[10px] uppercase mb-4">
-              Gargalo 2: Líder Operacional
+        {/* Right Side - Director Prompt Card */}
+        <FadeUp delay={0.3} className="h-full">
+          <div className="glass-card rounded-3xl border-2 border-claude-salmon/30 bg-gradient-to-br from-claude-salmon/10 to-black/40 p-8 h-full flex flex-col">
+            {/* Header */}
+            <div className="flex items-center gap-3 mb-8">
+              <Brain className="w-8 h-8 text-claude-salmon" />
+              <h3 className="text-2xl font-bold text-white">PROMPT DE DIRETORIA</h3>
             </div>
-            <h2 className="text-5xl md:text-[5rem] font-display leading-[0.9] text-claude-salmon drop-shadow-[0_0_20px_rgba(204,120,92,0.3)]">
-              Tempo de <br />Estratégia
-            </h2>
-            <p className="text-xl text-white/50 max-w-md mt-6 leading-relaxed">
-              O operacional consome o dia. O Claude atua como um parceiro de diretoria para analisar cenários de churn e resgate.
-            </p>
-          </FadeUp>
-        </div>
+
+            {/* Terminal/Code Block */}
+            <div className="flex-1 bg-black/60 rounded-2xl p-6 border border-white/10 mb-6 font-mono text-sm overflow-hidden">
+              <span className="text-white/40 text-xs block mb-3">Análise de Dados Brutos (Upload de CSV/Planilha)</span>
+              <p className="text-white/80 leading-relaxed italic">
+                "Analise esta planilha com as últimas 50 vendas perdidas (Lost). Cruze os motivos de perda com o porte do cliente e sugira <span className="text-claude-salmon font-bold">3 ações imediatas</span> de contorno para a equipa de vendas aplicar amanhã."
+              </p>
+            </div>
+
+            {/* Result Banner */}
+            <div className="flex items-center justify-center gap-2 p-4 rounded-2xl bg-claude-salmon/15 border border-claude-salmon/30">
+              <div className="w-2 h-2 rounded-full bg-claude-salmon animate-pulse" />
+              <span className="font-mono text-sm text-claude-salmon font-bold">Resultado em 10 Segundos</span>
+            </div>
+          </div>
+        </FadeUp>
       </div>
     </Slide>,
 
@@ -635,52 +643,90 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 8: Gargalo 3 (Liderança sem treinar)
-    <Slide key={7} glowColor="rgba(255, 92, 53, 0.12)">
+    // Slide 8: Gargalo 3 (Liderança sem treinar) — Live Demo Red Carpet
+    <Slide key={7} glowColor="rgba(255, 92, 53, 0.15)">
       <div className="space-y-12">
-        <div className="flex flex-col md:flex-row gap-8 items-start justify-between">
-          <FadeUp className="max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gamma-orange/10 border border-gamma-orange/20 text-gamma-orange font-mono text-[10px] uppercase mb-6">
-              Gargalo 3: Falta de Treinamento
-            </div>
-            <h2 className="text-5xl md:text-[5rem] font-display leading-[0.9] text-gamma-orange drop-shadow-[0_0_20px_rgba(255,92,53,0.3)]">
-              Cultura de <br />Execução
-            </h2>
-            <p className="text-xl text-white/50 mt-6 leading-relaxed">
-              Treinar cansa e consome tempo de criação. O Gamma e NotebookLM criam materiais e apresentações de MGC em minutos.
-            </p>
-          </FadeUp>
-          
-          <FadeUp delay={0.2} className="w-full md:w-auto">
-            <div className="glass-card p-8 rounded-3xl bg-gamma-orange/5 border-gamma-orange/10 max-w-sm">
-              <Zap className="w-8 h-8 text-gamma-orange mb-4 animate-pulse" />
-              <p className="text-sm text-white/60 leading-relaxed italic">
-                "Nosso trabalho é definir a mensagem. O trabalho de mastigar slides e resumos é da máquina."
-              </p>
-            </div>
-          </FadeUp>
-        </div>
+        {/* Header - Centered */}
+        <FadeUp className="text-center space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gamma-orange/10 border border-gamma-orange/20 text-gamma-orange font-mono text-[10px] uppercase mb-4">
+            Gargalo 3: Falta de Treinamento
+          </div>
+          <h2 className="text-6xl md:text-8xl font-display leading-[0.95] font-black tracking-tight">
+            <span className="text-gamma-orange drop-shadow-[0_0_30px_rgba(255,92,53,0.5)]">CULTURA DE EXECUÇÃO</span>
+          </h2>
+          <p className="text-lg md:text-xl text-white/70 italic max-w-3xl mx-auto">
+            A nossa única função é definir a mensagem. O trabalho de formatar slides e mastigar resumos é da máquina.
+          </p>
+        </FadeUp>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Two Column Grid for Live Demos */}
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* GAMMA Card */}
           <StaggerItem>
-            <div className="glass-card p-6 rounded-2xl border border-white/5 flex gap-5 items-center">
-              <div className="w-12 h-12 rounded-xl bg-gamma-orange/10 flex items-center justify-center shrink-0">
-                <Monitor className="w-6 h-6 text-gamma-orange" />
+            <div className="group relative h-full rounded-3xl overflow-hidden border-2 border-gamma-orange/30 bg-gradient-to-br from-gamma-orange/10 to-black/40 p-8 hover:border-gamma-orange/50 transition-all">
+              {/* Live Demo Badge */}
+              <div className="absolute top-4 right-4 flex items-center gap-2 px-3 py-2 rounded-full bg-red-500/20 border border-red-500/40 z-10">
+                <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                <span className="font-mono text-xs uppercase text-red-400 font-bold">Demo ao Vivo</span>
               </div>
-              <div>
-                <h4 className="font-bold">Gamma</h4>
-                <p className="text-xs text-white/40">Slides prontos em 2 min para diretoria ou time.</p>
+
+              <div className="space-y-6 mt-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-gamma-orange/10 flex items-center justify-center shrink-0">
+                    <Monitor className="w-6 h-6 text-gamma-orange" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Gamma</h3>
+                </div>
+
+                <p className="text-white/80 leading-relaxed">
+                  Transforma briefing em slides executivos. Diretoria entende a estratégia em 2 minutos.
+                </p>
+
+                <div className="bg-black/40 rounded-2xl p-5 border border-gamma-orange/30">
+                  <p className="text-sm italic text-white/70">
+                    Carregue um PDF com a estratégia trimestral e gere 20 slides prontos para apresentação ao board.
+                  </p>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="mt-8 pt-6 border-t border-gamma-orange/20">
+                <p className="text-center text-sm font-mono text-gamma-orange">Tempo estimado: 2 Minutos</p>
               </div>
             </div>
           </StaggerItem>
+
+          {/* NOTEBOOKLM Card */}
           <StaggerItem>
-            <div className="glass-card p-6 rounded-2xl border border-white/5 flex gap-5 items-center">
-              <div className="w-12 h-12 rounded-xl bg-notebook-green/10 flex items-center justify-center shrink-0">
-                <BookOpen className="w-6 h-6 text-notebook-green" />
+            <div className="group relative h-full rounded-3xl overflow-hidden border-2 border-notebook-green/30 bg-gradient-to-br from-notebook-green/10 to-black/40 p-8 hover:border-notebook-green/50 transition-all">
+              {/* Live Demo Badge */}
+              <div className="absolute top-4 right-4 flex items-center gap-2 px-3 py-2 rounded-full bg-red-500/20 border border-red-500/40 z-10">
+                <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                <span className="font-mono text-xs uppercase text-red-400 font-bold">Demo ao Vivo</span>
               </div>
-              <div>
-                <h4 className="font-bold">NotebookLM</h4>
-                <p className="text-xs text-white/40">Transforma manuais densos em podcasts de estudo.</p>
+
+              <div className="space-y-6 mt-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-notebook-green/10 flex items-center justify-center shrink-0">
+                    <BookOpen className="w-6 h-6 text-notebook-green" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">NotebookLM</h3>
+                </div>
+
+                <p className="text-white/80 leading-relaxed">
+                  Transforma documentos em podcast. O vendedor que está inseguro ouve em 15 minutos.
+                </p>
+
+                <div className="bg-black/40 rounded-2xl p-5 border border-notebook-green/30">
+                  <p className="text-sm italic text-white/70">
+                    Carregue o manual completo do produto e gere um podcast de estudo com resumo executivo.
+                  </p>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="mt-8 pt-6 border-t border-notebook-green/20">
+                <p className="text-center text-sm font-mono text-notebook-green">Play no Podcast</p>
               </div>
             </div>
           </StaggerItem>
