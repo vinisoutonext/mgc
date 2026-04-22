@@ -312,53 +312,104 @@ export default function App() {
       </div>
     </Slide>,
 
-    // Slide 4: Raio-X Arsenal SDR WhatsApp
-    <Slide key={3} glowColor="rgba(66, 133, 244, 0.08)">
-      <div className="space-y-10">
+    // Slide 4: Raio-X Arsenal SDR WhatsApp — Combat Modules
+    <Slide key={3} glowColor="rgba(66, 133, 244, 0.12)">
+      <div className="space-y-12">
         <FadeUp>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-google-blue/10 border border-google-blue/20 text-google-blue font-mono text-[10px] uppercase mb-4">
-            Raio-X: Arsenal do SDR
-          </div>
-          <h2 className="text-5xl md:text-[5rem] font-display leading-[0.9] text-google-blue drop-shadow-[0_0_20px_rgba(66,133,244,0.3)]">
-            O Gemini vai <br />muito além.
+          <h2 className="text-5xl md:text-7xl font-display leading-[0.95] font-black tracking-tight mb-4">
+            MUITO ALÉM DE <br />
+            <span className="text-google-blue drop-shadow-[0_0_30px_rgba(66,133,244,0.5)]">RESPONDER RÁPIDO</span>
           </h2>
-          <p className="text-xl text-white/50 max-w-2xl mt-4 leading-relaxed">
-            Responder rápido é só o começo. Veja o que o Gemini faz pelo SDR no WhatsApp antes, durante e depois da conversa.
+          <p className="text-lg md:text-xl text-white/60 max-w-2xl leading-relaxed italic">
+            O Gemini não é um corretor ortográfico. É um copiloto que atua ANTES, DURANTE e DEPOIS da negociação.
           </p>
         </FadeUp>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* CARD 1: Desenterrar Leads */}
           <FadeUp delay={0.2}>
-            <div className="glass-card glass-card-hover p-8 rounded-3xl group h-full border-google-blue/10 hover:border-google-blue/30">
-              <UserSearch className="w-8 h-8 mb-4 text-google-blue opacity-60 group-hover:opacity-100 transition-opacity" />
-              <h3 className="text-xl font-semibold mb-3">Desenterrar Leads</h3>
-              <p className="text-white/50 text-sm leading-relaxed mb-5">O lead visualizou e sumiu há 5 dias? Gere uma mensagem de quebra de padrão em segundos.</p>
-              <div className="glass-card p-4 rounded-xl border-l-2 border-google-blue/40">
-                <span className="text-[9px] uppercase font-mono text-white/30 block mb-1">Prompt</span>
-                <p className="text-xs italic text-white/70 leading-snug">"O lead visualizou e ignorou há 5 dias. Crie uma mensagem curta de quebra de padrão para o WhatsApp."</p>
+            <div className="group relative h-full rounded-3xl overflow-hidden border border-google-blue/20 bg-gradient-to-br from-white/[0.05] to-black/40 p-8 hover:border-google-blue/40 transition-all">
+              {/* Watermark Icon */}
+              <div className="absolute top-0 right-0 opacity-10 text-google-blue pointer-events-none">
+                <UserSearch className="w-40 h-40 -mr-12 -mt-12" />
+              </div>
+
+              <div className="relative z-10 space-y-6">
+                <span className="font-mono text-xs uppercase tracking-widest text-white/40">Cenário 01</span>
+                <h3 className="text-2xl font-bold text-white">Desenterrar Leads</h3>
+                <p className="text-white/70 leading-relaxed">
+                  O lead visualizou a proposta há 5 dias e desapareceu. O SDR não sabe como cobrar sem ser chato.
+                </p>
+
+                {/* Prompt Block */}
+                <div className="bg-black/40 rounded-2xl p-5 border border-google-blue/20">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Zap className="w-4 h-4 text-google-blue" />
+                    <span className="text-[9px] font-mono uppercase text-white/50">Comando Rápido</span>
+                  </div>
+                  <p className="text-sm italic text-white/80">
+                    "Crie 3 opções de mensagens curtas para WhatsApp de quebra de padrão, usando gatilhos de curiosidade."
+                  </p>
+                </div>
               </div>
             </div>
           </FadeUp>
 
+          {/* CARD 2: Fim dos Áudios Longos — DESTAQUE */}
           <FadeUp delay={0.35}>
-            <div className="glass-card glass-card-hover p-8 rounded-3xl group h-full border-google-blue/10 hover:border-google-blue/30">
-              <Mic className="w-8 h-8 mb-4 text-google-blue opacity-60 group-hover:opacity-100 transition-opacity" />
-              <h3 className="text-xl font-semibold mb-3">Resumo de Áudio Longo</h3>
-              <p className="text-white/50 text-sm leading-relaxed mb-5">Sabe aquele áudio de 3 minutos do cliente contando a vida? A IA extrai os 3 pontos de dor em segundos, sem você ouvir tudo.</p>
-              <div className="glass-card p-4 rounded-xl bg-google-blue/5">
-                <p className="text-xs text-white/50 leading-snug">Transcreva o áudio e peça ao Gemini: <span className="text-google-blue italic">"Liste as 3 principais objeções ou dores mencionadas."</span></p>
+            <div className="group relative h-full rounded-3xl overflow-hidden border-t-4 border-t-google-blue border-google-blue/30 bg-gradient-to-br from-google-blue/10 to-black/40 p-8 shadow-[0_0_30px_rgba(66,133,244,0.2)] hover:border-google-blue/50 transition-all">
+              {/* Watermark Icon with Pulse */}
+              <div className="absolute top-0 right-0 opacity-10 text-google-blue pointer-events-none animate-pulse">
+                <Mic className="w-40 h-40 -mr-12 -mt-12" />
+              </div>
+
+              <div className="relative z-10 space-y-6">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs uppercase tracking-widest text-google-blue font-bold">Cenário 02 — Game Changer</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white">Fim dos Áudios Longos</h3>
+                <p className="text-white/70 leading-relaxed">
+                  O cliente manda um podcast de 5 minutos a contar a vida. O SDR perde tempo a ouvir e a anotar.
+                </p>
+
+                {/* Prompt Block - Highlighted */}
+                <div className="bg-google-blue/15 rounded-2xl p-5 border border-google-blue/40">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-[9px] font-mono uppercase tracking-widest bg-google-blue text-white px-2 py-1 rounded-full">3 Segundos</span>
+                  </div>
+                  <p className="text-sm italic text-white/85">
+                    "Extraia as 3 principais dores deste áudio e crie uma resposta em tópicos focada no problema dele."
+                  </p>
+                </div>
               </div>
             </div>
           </FadeUp>
 
+          {/* CARD 3: Simulador de Combate */}
           <FadeUp delay={0.5}>
-            <div className="glass-card glass-card-hover p-8 rounded-3xl group h-full border-google-blue/10 hover:border-google-blue/30">
-              <Dumbbell className="w-8 h-8 mb-4 text-google-blue opacity-60 group-hover:opacity-100 transition-opacity" />
-              <h3 className="text-xl font-semibold mb-3">Roleplay de Negociação</h3>
-              <p className="text-white/50 text-sm leading-relaxed mb-5">Treine o contorno de objeção simulando o WhatsApp do cliente antes de mandar a mensagem real. Erre com a IA, não com o lead.</p>
-              <div className="glass-card p-4 rounded-xl border-l-2 border-google-blue/40">
-                <span className="text-[9px] uppercase font-mono text-white/30 block mb-1">Prompt</span>
-                <p className="text-xs italic text-white/70 leading-snug">"Simule ser um cliente resistente a preço. Responda como ele responderia no WhatsApp."</p>
+            <div className="group relative h-full rounded-3xl overflow-hidden border border-red-500/20 bg-gradient-to-br from-white/[0.05] to-black/40 p-8 hover:border-red-500/40 transition-all">
+              {/* Watermark Icon */}
+              <div className="absolute top-0 right-0 opacity-10 text-red-500 pointer-events-none">
+                <Dumbbell className="w-40 h-40 -mr-12 -mt-12" />
+              </div>
+
+              <div className="relative z-10 space-y-6">
+                <span className="font-mono text-xs uppercase tracking-widest text-white/40">Cenário 03</span>
+                <h3 className="text-2xl font-bold text-white">Simulador de Combate</h3>
+                <p className="text-white/70 leading-relaxed">
+                  A negociação é de alto valor. O SDR está inseguro sobre como o dono da academia vai reagir ao preço.
+                </p>
+
+                {/* Prompt Block - Red Warning */}
+                <div className="bg-black/40 rounded-2xl p-5 border border-red-500/20">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Zap className="w-4 h-4 text-red-400" />
+                    <span className="text-[9px] font-mono uppercase text-red-400 font-bold">Erre com a IA, não com o Lead</span>
+                  </div>
+                  <p className="text-sm italic text-white/80">
+                    "Aja como um dono de academia focado em corte de custos. Ataque a minha proposta de valor abaixo."
+                  </p>
+                </div>
               </div>
             </div>
           </FadeUp>
@@ -694,7 +745,7 @@ export default function App() {
                   <div>
                     <span className="text-[10px] font-mono text-white/30 block mb-1">João (Lead) — agora</span>
                     <div className="bg-white/10 rounded-2xl rounded-tl-sm p-3 text-sm text-white/80 leading-relaxed max-w-xs">
-                      Mas o sistema integra com a maquininha Stone e exporta para o meu contador no formato SPED?
+                      Vocês montam personalizados de treino no sistema? E dá pra usar IA pra isso?
                     </div>
                   </div>
                 </div>
@@ -704,7 +755,7 @@ export default function App() {
                   <Search className="w-4 h-4 text-notebook-green shrink-0 mt-0.5" />
                   <div>
                     <span className="text-[9px] font-mono text-notebook-green/70 block mb-1">SDR pergunta ao NotebookLM</span>
-                    <p className="text-xs italic text-white/60">"Next Fit integra com Stone e exporta SPED?"</p>
+                    <p className="text-xs italic text-white/60">"O sistema monta treinos personalizados com IA?"</p>
                   </div>
                 </div>
 
@@ -713,7 +764,7 @@ export default function App() {
                   <div>
                     <span className="text-[10px] font-mono text-white/30 block mb-1 text-right">NotebookLM — 3 segundos</span>
                     <div className="bg-notebook-green/20 rounded-2xl rounded-tr-sm p-3 text-sm text-white/90 leading-relaxed max-w-xs text-right">
-                      Sim. Integra nativo com Stone (pag. 14 do Manual). Export SPED disponível no modulo Financeiro (pag. 31).
+                      Sim. Módulo IA Trainer (pag. 67). Monta personalizados baseado no perfil do aluno. Referência: Manual v3.2.
                     </div>
                   </div>
                   <div className="w-8 h-8 rounded-full bg-notebook-green/20 shrink-0 flex items-center justify-center text-xs font-bold text-notebook-green">N</div>
@@ -808,12 +859,6 @@ export default function App() {
           ))}
         </div>
 
-        <FadeUp delay={0.8} className="flex justify-center md:justify-start">
-          <button className="flex items-center gap-3 px-12 py-5 bg-aqua text-bg-dark rounded-full font-bold text-xl hover:scale-105 transition-all shadow-[0_0_30px_rgba(79,255,176,0.3)] group">
-            Começar Piloto amanha
-            <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-          </button>
-        </FadeUp>
       </div>
     </Slide>
   ];
