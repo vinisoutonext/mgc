@@ -736,105 +736,101 @@ export default function App() {
 
     // Slide 9: NotebookLM — O Clone do Produto
     <Slide key={8} glowColor="rgba(52, 168, 83, 0.1)">
-      <div className="space-y-10">
+      <div className="space-y-6 flex flex-col h-full">
         <FadeUp>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-notebook-green/10 border border-notebook-green/20 text-notebook-green font-mono text-[10px] uppercase mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-notebook-green/10 border border-notebook-green/20 text-notebook-green font-mono text-[10px] uppercase mb-2">
             NotebookLM na prática
           </div>
-          <h2 className="text-5xl md:text-7xl font-display leading-[0.9] text-notebook-green drop-shadow-[0_0_20px_rgba(52,168,83,0.3)] uppercase">
-            O Clone <br />do Produto.
+          <h2 className="text-5xl md:text-6xl font-display leading-[0.95] text-notebook-green drop-shadow-[0_0_20px_rgba(52,168,83,0.3)] uppercase">
+            O Clone do Produto.
           </h2>
-          <p className="text-xl text-white/50 mt-4 max-w-2xl leading-relaxed">
-            A resposta exata, com o cliente na linha.
-          </p>
+          <p className="text-lg text-white/50 mt-2">A resposta exata, com o cliente na linha.</p>
         </FadeUp>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          {/* Setup */}
-          <FadeUp delay={0.2}>
-            <div className="space-y-4">
-              <h3 className="text-white/40 font-mono text-xs uppercase tracking-widest mb-4">A liderança faz o upload uma vez:</h3>
-              <StaggerContainer className="space-y-3">
-                {[
-                  { icon: BookOpen, label: "Manual do Next Fit", desc: "Funcionalidades, fluxos e integrações" },
-                  { icon: FileText, label: "Regras de Negócio", desc: "Planos, condições especiais e política comercial" },
-                  { icon: Layers, label: "Tabela de Preços", desc: "Todos os planos e comparativos atualizados" }
-                ].map(({ icon: Icon, label, desc }) => (
-                  <StaggerItem key={label}>
-                    <div className="glass-card p-5 rounded-2xl flex items-center gap-4 border-notebook-green/10 hover:border-notebook-green/30 transition-colors">
-                      <div className="w-10 h-10 rounded-xl bg-notebook-green/10 flex items-center justify-center shrink-0">
-                        <Icon className="w-5 h-5 text-notebook-green" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-sm">{label}</h4>
-                        <p className="text-xs text-white/40">{desc}</p>
-                      </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
+          {/* Setup - Compacto */}
+          <FadeUp delay={0.2} className="flex flex-col justify-start">
+            <h3 className="text-white/40 font-mono text-xs uppercase tracking-widest mb-3">Upload uma vez:</h3>
+            <StaggerContainer className="space-y-2">
+              {[
+                { icon: BookOpen, label: "Manual", desc: "Funcionalidades e fluxos" },
+                { icon: FileText, label: "Negócio", desc: "Planos e política" },
+                { icon: Layers, label: "Preços", desc: "Atualizado" }
+              ].map(({ icon: Icon, label, desc }) => (
+                <StaggerItem key={label}>
+                  <div className="glass-card p-3 rounded-xl flex items-start gap-3 border-notebook-green/10 hover:border-notebook-green/30 transition-colors">
+                    <div className="w-8 h-8 rounded-lg bg-notebook-green/10 flex items-center justify-center shrink-0">
+                      <Icon className="w-4 h-4 text-notebook-green" />
                     </div>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-            </div>
+                    <div className="min-w-0">
+                      <h4 className="font-semibold text-xs">{label}</h4>
+                      <p className="text-[11px] text-white/40 line-clamp-1">{desc}</p>
+                    </div>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
           </FadeUp>
 
-          {/* Caso de uso */}
-          <FadeUp delay={0.4}>
-            <div className="glass-card p-8 rounded-3xl border-notebook-green/20 bg-notebook-green/[0.03] h-full">
-              <div className="flex items-center gap-2 mb-6">
+          {/* Caso de uso - Centro */}
+          <FadeUp delay={0.3} className="lg:col-span-2">
+            <div className="glass-card p-5 rounded-2xl border-notebook-green/20 bg-notebook-green/[0.05] h-full flex flex-col">
+              <div className="flex items-center gap-2 mb-4">
                 <div className="w-2 h-2 rounded-full bg-notebook-green animate-pulse" />
-                <span className="font-mono text-xs text-notebook-green uppercase tracking-widest">Caso de uso real</span>
+                <span className="font-mono text-xs text-notebook-green uppercase">Caso real</span>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3 flex-1 overflow-hidden">
                 {/* Lead pergunta */}
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-white/10 shrink-0 flex items-center justify-center text-xs font-bold">J</div>
-                  <div>
-                    <span className="text-[10px] font-mono text-white/30 block mb-1">João (Lead) — agora</span>
-                    <div className="bg-white/10 rounded-2xl rounded-tl-sm p-3 text-sm text-white/80 leading-relaxed max-w-xs">
-                      Vocês montam personalizados de treino no sistema? E dá pra usar IA pra isso?
+                <div className="flex items-start gap-2">
+                  <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[10px] font-bold">J</div>
+                  <div className="min-w-0 flex-1">
+                    <span className="text-[9px] font-mono text-white/30 block mb-1">João — agora</span>
+                    <div className="bg-white/10 rounded-lg rounded-tl-sm p-2 text-xs text-white/80">
+                      Vocês montam treino personalizado com IA?
                     </div>
                   </div>
                 </div>
 
                 {/* SDR consulta */}
-                <div className="glass-card p-4 rounded-xl border-notebook-green/20 bg-notebook-green/5 flex gap-3 items-start">
-                  <Search className="w-4 h-4 text-notebook-green shrink-0 mt-0.5" />
-                  <div>
-                    <span className="text-[9px] font-mono text-notebook-green/70 block mb-1">SDR pergunta ao NotebookLM</span>
-                    <p className="text-xs italic text-white/60">"O sistema monta treinos personalizados com IA?"</p>
+                <div className="glass-card p-3 rounded-lg border-notebook-green/20 bg-notebook-green/5 flex gap-2 items-start text-xs">
+                  <Search className="w-3 h-3 text-notebook-green shrink-0 mt-0.5" />
+                  <div className="min-w-0">
+                    <span className="text-[8px] font-mono text-notebook-green/70 block">SDR → NotebookLM</span>
+                    <p className="italic text-white/60">"Sistema monta treinos com IA?"</p>
                   </div>
                 </div>
 
                 {/* NotebookLM responde */}
-                <div className="flex items-start gap-3 justify-end">
-                  <div>
-                    <span className="text-[10px] font-mono text-white/30 block mb-1 text-right">NotebookLM — 3 segundos</span>
-                    <div className="bg-notebook-green/20 rounded-2xl rounded-tr-sm p-3 text-sm text-white/90 leading-relaxed max-w-xs text-right">
-                      Sim. Módulo IA Trainer (pag. 67). Monta personalizados baseado no perfil do aluno. Referência: Manual v3.2.
+                <div className="flex items-start gap-2 justify-end">
+                  <div className="text-right min-w-0 flex-1">
+                    <span className="text-[9px] font-mono text-white/30 block mb-1">NotebookLM — 3s</span>
+                    <div className="bg-notebook-green/20 rounded-lg rounded-tr-sm p-2 text-xs text-white/90 ml-auto">
+                      Sim. Módulo IA Trainer (pag. 67). Manual v3.2.
                     </div>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-notebook-green/20 shrink-0 flex items-center justify-center text-xs font-bold text-notebook-green">N</div>
+                  <div className="w-6 h-6 rounded-full bg-notebook-green/20 flex items-center justify-center shrink-0 text-xs font-bold text-notebook-green">N</div>
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-white/5">
-                <p className="text-sm text-white/50 leading-relaxed">A venda <span className="text-notebook-green font-semibold">não esfria</span>. O SDR não interrompe o gerente. O cliente recebe a resposta certa, na hora certa.</p>
+              <div className="mt-3 pt-3 border-t border-white/5">
+                <p className="text-xs text-white/50">Venda <span className="text-notebook-green font-semibold">não esfria</span>. Resposta certa, hora certa.</p>
               </div>
             </div>
           </FadeUp>
         </div>
 
-        {/* Foguete no Onboarding Card */}
-        <FadeUp delay={0.6} className="w-full max-w-4xl">
-          <div className="glass-card p-8 rounded-3xl border-2 border-notebook-green/40 bg-notebook-green/[0.1]">
-            <div className="flex items-start gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-notebook-green/20 flex items-center justify-center shrink-0">
-                <Rocket className="w-8 h-8 text-notebook-green animate-bounce" />
+        {/* Foguete no Onboarding - Sempre visível */}
+        <FadeUp delay={0.5} className="w-full">
+          <div className="glass-card p-5 rounded-2xl border-2 border-notebook-green/40 bg-notebook-green/[0.1]">
+            <div className="flex items-start gap-3">
+              <div className="w-12 h-12 rounded-xl bg-notebook-green/20 flex items-center justify-center shrink-0">
+                <Rocket className="w-6 h-6 text-notebook-green animate-bounce" />
               </div>
-              <div>
-                <h3 className="text-2xl font-bold text-notebook-green mb-2">Foguete no Onboarding</h3>
-                <p className="text-white/80 leading-relaxed">
-                  Reduza o ramp-up de meses para dias. Um vendedor com 1 semana de casa consulta o "oráculo" e responde com a <span className="font-semibold">autoridade de um sênior</span>.
+              <div className="min-w-0 flex-1">
+                <h3 className="text-lg font-bold text-notebook-green mb-1">Foguete no Onboarding</h3>
+                <p className="text-sm text-white/80 leading-relaxed">
+                  Ramp-up de meses para dias. Vendedor com 1 semana consulta o "oráculo" e responde com <span className="font-semibold">autoridade de sênior</span>.
                 </p>
               </div>
             </div>
