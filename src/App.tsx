@@ -4,7 +4,7 @@
  */
 
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'motion/react';
-import { Sparkles, BookOpen, Zap, MessageSquare, Search, Circle as XCircle, ArrowRight, Monitor, Video, Users, Brain, Layers, CircleCheck as CheckCircle2, ChevronDown, Mic, Dumbbell, UserSearch, Swords, FileText } from 'lucide-react';
+import { Sparkles, BookOpen, Zap, MessageSquare, Search, Circle as XCircle, ArrowRight, Monitor, Video, Users, Brain, Layers, CircleCheck as CheckCircle2, ChevronDown, Mic, Dumbbell, UserSearch, Swords, FileText, Rocket } from 'lucide-react';
 import React, { useState, useEffect, useRef, type ReactNode } from 'react';
 
 // --- Constants & Types ---
@@ -253,30 +253,30 @@ export default function App() {
 
     // Slide 3: Gargalo 1 (SDR Travado) — Redesigned
     <Slide key={2} glowColor="rgba(66, 133, 244, 0.15)">
-      <div className="flex flex-col justify-center items-center text-center space-y-12">
+      <div className="flex flex-col justify-start pt-20 items-center text-center space-y-8">
         {/* Problem Statement - Big and Bold */}
         <FadeUp className="w-full max-w-4xl">
-          <div className="space-y-4 mb-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-google-blue/15 border border-google-blue/30 text-google-blue font-mono text-[10px] uppercase mb-2">
+          <div className="space-y-6 mb-2">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-google-blue/15 border border-google-blue/30 text-google-blue font-mono text-[10px] uppercase mb-3">
               Gargalo 1: SDR Travado
             </div>
-            <h2 className="text-6xl md:text-[7rem] font-display leading-[0.95] font-black tracking-tight">
+            <h2 className="text-5xl md:text-6xl font-display leading-[0.95] font-black tracking-tight">
               O Lead<br />
               <span className="text-google-blue drop-shadow-[0_0_30px_rgba(66,133,244,0.4)]">Esfria</span>
             </h2>
           </div>
 
-          <div className="glass-card p-8 md:p-10 rounded-3xl border border-red-500/20 bg-red-500/5 max-w-2xl mx-auto mb-8">
-            <p className="text-2xl md:text-3xl font-sans leading-relaxed text-white/90 italic">
+          <div className="glass-card p-6 md:p-8 rounded-3xl border border-red-500/20 bg-red-500/5 max-w-2xl mx-auto mb-4">
+            <p className="text-lg md:text-2xl font-sans leading-relaxed text-white/90 italic">
               O SDR gasta <span className="font-bold text-red-400">15 minutos</span> pensando no que responder.<br />
-              <span className="text-white/50">O lead visualizou a mensagem e sumiu.</span>
+              <span className="text-white/50 text-base">O lead visualizou a mensagem e sumiu.</span>
             </p>
           </div>
         </FadeUp>
 
         {/* Solution Block */}
         <FadeUp delay={0.3} className="w-full max-w-4xl">
-          <div className="glass-card p-10 md:p-12 rounded-3xl border-2 border-google-blue/40 bg-google-blue/[0.08]">
+          <div className="glass-card p-8 md:p-10 rounded-3xl border-2 border-google-blue/40 bg-google-blue/[0.08]">
             <div className="flex items-center gap-3 mb-6">
               <Zap className="w-8 h-8 text-google-blue" />
               <span className="font-mono text-sm text-google-blue uppercase tracking-widest font-bold">Solução com Gemini</span>
@@ -368,7 +368,7 @@ export default function App() {
 
     // Slide 5: Antes x Depois no WhatsApp
     <Slide key={4} glowColor="rgba(79, 255, 176, 0.06)">
-      <div className="space-y-10">
+      <div className="space-y-8">
         <FadeUp>
           <h2 className="text-5xl md:text-7xl font-display tracking-tight uppercase leading-none">
             Antes <span className="text-white/20">x</span> Depois
@@ -377,55 +377,84 @@ export default function App() {
         </FadeUp>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-          {/* Sem IA */}
+          {/* Sem IA - WhatsApp Mockup */}
           <FadeUp delay={0.2}>
-            <div className="glass-card p-8 rounded-3xl h-full border border-red-500/20 bg-red-500/[0.03]">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]" />
-                <span className="font-mono text-xs uppercase tracking-widest text-red-400">Sem IA — O "Textão"</span>
+            <div className="flex flex-col h-full">
+              <div className="mb-4">
+                <span className="font-mono text-xs uppercase tracking-widest text-red-400 font-bold">Sem IA — O "Textão"</span>
               </div>
-              <div className="glass-card p-5 rounded-2xl bg-white/[0.02] border-white/5">
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="w-8 h-8 rounded-full bg-white/10 shrink-0 flex items-center justify-center text-xs font-bold">S</div>
-                  <div className="flex-1">
-                    <span className="text-[10px] font-mono text-white/30 block mb-2">SDR — agora</span>
-                    <div className="bg-google-blue/20 rounded-2xl rounded-tl-sm p-4 text-sm text-white/70 leading-relaxed">
-                      Olá João tudo bom? Sou da Next Fit e quero apresentar nosso sistema completo de gestão de academia com controle financeiro módulo de treinos agendamento de aulas fichas de alunos controle de frequência relatórios de inadimplência e muito mais temos planos a partir de R$299 por mês e fazemos treinamento completo temos suporte 24h e já atendemos mais de 500 academias no Brasil inteiro quer que eu mande o link do nosso site para você ver tudo?
+              <div className="flex-1 bg-gray-900/50 rounded-3xl p-6 border border-white/5 backdrop-blur-sm overflow-hidden flex flex-col">
+                {/* WhatsApp Header */}
+                <div className="text-center mb-6 pb-4 border-b border-white/10">
+                  <p className="text-[10px] font-mono text-white/40">João Silva — 14:32</p>
+                </div>
+
+                {/* Messages */}
+                <div className="flex-1 space-y-4 overflow-y-auto mb-4">
+                  <div className="flex justify-start">
+                    <div className="bg-red-900/30 rounded-t-3xl rounded-br-3xl px-4 py-3 max-w-xs border border-red-500/20">
+                      <p className="text-sm text-white/70 leading-relaxed">
+                        Olá João tudo bom? Sou da Next Fit e quero apresentar nosso sistema completo de gestão de academia com controle financeiro módulo de treinos agendamento de aulas fichas de alunos controle de frequência relatórios de inadimplência e muito mais temos planos a partir de R$299 por mês e fazemos treinamento completo temos suporte 24h e já atendemos mais de 500 academias no Brasil inteiro quer que eu mande o link do nosso site para você ver tudo?
+                      </p>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="mt-4 flex gap-2 flex-wrap">
-                <span className="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-[10px] font-mono">Focado no produto</span>
-                <span className="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-[10px] font-mono">Sem respiro</span>
-                <span className="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-[10px] font-mono">Panfleto digital</span>
+
+                {/* Tags */}
+                <div className="flex gap-2 flex-wrap pt-4 border-t border-white/10">
+                  <span className="px-2 py-1 rounded-full bg-red-500/10 text-red-400 text-[9px] font-mono">Sem quebra de linha</span>
+                  <span className="px-2 py-1 rounded-full bg-red-500/10 text-red-400 text-[9px] font-mono">Panfleto</span>
+                  <span className="px-2 py-1 rounded-full bg-red-500/10 text-red-400 text-[9px] font-mono">Lead desaparece</span>
+                </div>
               </div>
             </div>
           </FadeUp>
 
-          {/* Com IA */}
+          {/* Com IA - WhatsApp Mockup */}
           <FadeUp delay={0.4}>
-            <div className="glass-card p-8 rounded-3xl h-full border border-aqua/20 bg-aqua/[0.02]">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-3 h-3 rounded-full bg-aqua shadow-[0_0_8px_rgba(79,255,176,0.6)]" />
-                <span className="font-mono text-xs uppercase tracking-widest text-aqua">Com IA — Conversacional</span>
+            <div className="flex flex-col h-full">
+              <div className="mb-4">
+                <span className="font-mono text-xs uppercase tracking-widest text-aqua font-bold">Com IA — Conversacional</span>
               </div>
-              <div className="glass-card p-5 rounded-2xl bg-white/[0.02] border-white/5">
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="w-8 h-8 rounded-full bg-white/10 shrink-0 flex items-center justify-center text-xs font-bold">S</div>
-                  <div className="flex-1">
-                    <span className="text-[10px] font-mono text-white/30 block mb-2">SDR — agora</span>
-                    <div className="bg-google-blue/20 rounded-2xl rounded-tl-sm p-4 text-sm text-white/90 leading-relaxed">
-                      Fala João, vi que a taxa de evasão dos alunos é seu maior problema hoje.<br /><br />
-                      Posso te mostrar como o Next Fit automatiza essa retenção?
+              <div className="flex-1 bg-gray-900/50 rounded-3xl p-6 border border-white/5 backdrop-blur-sm overflow-hidden flex flex-col relative">
+                {/* Subtle green glow */}
+                <div className="absolute inset-0 bg-gradient-to-b from-aqua/5 to-transparent pointer-events-none" />
+
+                {/* WhatsApp Header */}
+                <div className="text-center mb-6 pb-4 border-b border-white/10 relative z-10">
+                  <p className="text-[10px] font-mono text-white/40">João Silva — 14:32</p>
+                </div>
+
+                {/* Messages */}
+                <div className="flex-1 space-y-4 overflow-y-auto mb-4 relative z-10">
+                  <div className="flex justify-start">
+                    <div className="bg-aqua/20 rounded-t-3xl rounded-br-3xl px-4 py-3 max-w-xs border border-aqua/40">
+                      <p className="text-sm text-white/90 leading-relaxed">
+                        Fala João, vi que a taxa de evasão dos alunos é seu maior problema hoje.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex justify-start mt-2">
+                    <div className="bg-aqua/20 rounded-t-3xl rounded-br-3xl px-4 py-3 max-w-xs border border-aqua/40">
+                      <p className="text-sm text-white/90 leading-relaxed">
+                        Posso te mostrar como o Next Fit automatiza essa retenção?
+                      </p>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="mt-4 flex gap-2 flex-wrap">
-                <span className="px-3 py-1 rounded-full bg-aqua/10 text-aqua text-[10px] font-mono">Focado na dor</span>
-                <span className="px-3 py-1 rounded-full bg-aqua/10 text-aqua text-[10px] font-mono">2 linhas</span>
-                <span className="px-3 py-1 rounded-full bg-aqua/10 text-aqua text-[10px] font-mono">Gera curiosidade</span>
+
+                {/* Checkmarks and Status */}
+                <div className="flex items-center justify-end gap-2 text-aqua/60 mb-4 text-[9px] relative z-10">
+                  <span>14:32</span>
+                  <span className="text-aqua drop-shadow-[0_0_4px_rgba(79,255,176,0.5)]">✓✓</span>
+                </div>
+
+                {/* Tags */}
+                <div className="flex gap-2 flex-wrap pt-4 border-t border-white/10 relative z-10">
+                  <span className="px-2 py-1 rounded-full bg-aqua/10 text-aqua text-[9px] font-mono">Direto ao ponto</span>
+                  <span className="px-2 py-1 rounded-full bg-aqua/10 text-aqua text-[9px] font-mono">2 linhas</span>
+                  <span className="px-2 py-1 rounded-full bg-aqua/10 text-aqua text-[9px] font-mono">Lead engaja</span>
+                </div>
               </div>
             </div>
           </FadeUp>
@@ -697,6 +726,23 @@ export default function App() {
             </div>
           </FadeUp>
         </div>
+
+        {/* Foguete no Onboarding Card */}
+        <FadeUp delay={0.6} className="w-full max-w-4xl">
+          <div className="glass-card p-8 rounded-3xl border-2 border-notebook-green/40 bg-notebook-green/[0.1]">
+            <div className="flex items-start gap-4">
+              <div className="w-16 h-16 rounded-2xl bg-notebook-green/20 flex items-center justify-center shrink-0">
+                <Rocket className="w-8 h-8 text-notebook-green animate-bounce" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-notebook-green mb-2">Foguete no Onboarding</h3>
+                <p className="text-white/80 leading-relaxed">
+                  Reduza o ramp-up de meses para dias. Um vendedor com 1 semana de casa consulta o "oráculo" e responde com a <span className="font-semibold">autoridade de um sênior</span>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </FadeUp>
       </div>
     </Slide>,
 
