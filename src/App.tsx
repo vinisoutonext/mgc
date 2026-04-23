@@ -326,19 +326,19 @@ export default function App() {
         </FadeUp>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* CARD 1: Desenterrar Leads */}
+          {/* CARD 1: Auditoria de WhatsApp (QA) */}
           <FadeUp delay={0.2}>
             <div className="group relative h-full rounded-3xl overflow-hidden border border-google-blue/20 bg-gradient-to-br from-white/[0.05] to-black/40 p-8 hover:border-google-blue/40 transition-all">
               {/* Watermark Icon */}
               <div className="absolute top-0 right-0 opacity-10 text-google-blue pointer-events-none">
-                <UserSearch className="w-40 h-40 -mr-12 -mt-12" />
+                <FileText className="w-40 h-40 -mr-12 -mt-12" />
               </div>
 
               <div className="relative z-10 space-y-6">
                 <span className="font-mono text-xs uppercase tracking-widest text-white/40">Cenário 01</span>
-                <h3 className="text-2xl font-bold text-white">Desenterrar Leads</h3>
+                <h3 className="text-2xl font-bold text-white">Auditoria de WhatsApp (QA)</h3>
                 <p className="text-white/70 leading-relaxed">
-                  O lead visualizou a proposta há 5 dias e desapareceu. O SDR não sabe como cobrar sem ser chato.
+                  Avaliar a qualidade do atendimento consome horas. Basta o gestor enviar a conversa exportada (TXT) ou um print, e a IA faz a auditoria completa em segundos.
                 </p>
 
                 {/* Prompt Block */}
@@ -348,7 +348,7 @@ export default function App() {
                     <span className="text-[9px] font-mono uppercase text-white/50">Comando Rápido</span>
                   </div>
                   <p className="text-sm italic text-white/80">
-                    "Crie 3 opções de mensagens curtas para WhatsApp de quebra de padrão, usando gatilhos de curiosidade."
+                    "Analise esta conversa de WhatsApp contra o nosso checklist de vendas. O SDR investigou a dor corretamente? Fez o pitch na hora certa? Aponte os erros e dê uma nota de 0 a 10."
                   </p>
                 </div>
               </div>
