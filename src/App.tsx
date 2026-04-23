@@ -325,7 +325,7 @@ export default function App() {
           </p>
         </FadeUp>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* CARD 1: Auditoria de WhatsApp (QA) */}
           <FadeUp delay={0.2}>
             <div className="group relative h-full rounded-3xl overflow-hidden border border-google-blue/20 bg-gradient-to-br from-white/[0.05] to-black/40 p-8 hover:border-google-blue/40 transition-all">
@@ -408,6 +408,35 @@ export default function App() {
                   </div>
                   <p className="text-sm italic text-white/80">
                     "Aja como um dono de academia focado em corte de custos. Ataque a minha proposta de valor abaixo."
+                  </p>
+                </div>
+              </div>
+            </div>
+          </FadeUp>
+
+          {/* CARD 4: Passagem de Bastão (Briefing) */}
+          <FadeUp delay={0.65}>
+            <div className="group relative h-full rounded-3xl overflow-hidden border border-google-blue/20 bg-gradient-to-br from-white/[0.05] to-black/40 p-8 hover:border-google-blue/40 transition-all">
+              {/* Watermark Icon */}
+              <div className="absolute top-0 right-0 opacity-10 text-google-blue pointer-events-none">
+                <Users className="w-40 h-40 -mr-12 -mt-12" />
+              </div>
+
+              <div className="relative z-10 space-y-6">
+                <span className="font-mono text-xs uppercase tracking-widest text-white/40">Cenário 04</span>
+                <h3 className="text-2xl font-bold text-white">Passagem de Bastão (Briefing)</h3>
+                <p className="text-white/70 leading-relaxed">
+                  O SDR qualifica, mas o Vendedor entra na reunião final às cegas e repete as mesmas perguntas, irritando o dono da academia.
+                </p>
+
+                {/* Prompt Block */}
+                <div className="bg-black/40 rounded-2xl p-5 border border-aqua/20">
+                  <div className="flex items-center gap-2 mb-3">
+                    <CheckCircle2 className="w-4 h-4 text-aqua" />
+                    <span className="text-[9px] font-mono uppercase text-aqua font-bold">SDR ➡️ Closer</span>
+                  </div>
+                  <p className="text-sm italic text-white/80">
+                    "Analise o histórico desta conversa de WhatsApp. Qual a dor principal? Crie um briefing de 3 tópicos (com o que atacar e o que não mencionar) para o Vendedor que vai assumir a reunião agora."
                   </p>
                 </div>
               </div>
