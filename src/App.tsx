@@ -13,17 +13,23 @@ const NAVIGATION_HEIGHT = 80;
 
 // --- Components ---
 
-const FadeUp = ({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; key?: React.Key; className?: string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-100px" }}
-    transition={{ duration: 0.8, ease: [0.21, 0.45, 0.32, 0.9], delay }}
-    className={className}
-  >
-    {children}
-  </motion.div>
-);
+const FadeUp = ({ children, delay = 0, className = "", stepIndex, currentStep }: { children: ReactNode; delay?: number; key?: React.Key; className?: string; stepIndex?: number; currentStep?: number }) => {
+  // If stepIndex is provided, use it to control visibility
+  const shouldShow = stepIndex === undefined || (currentStep !== undefined && stepIndex <= currentStep);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={shouldShow ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      whileInView={!stepIndex ? { opacity: 1, y: 0 } : undefined}
+      viewport={!stepIndex ? { once: true, margin: "-100px" } : undefined}
+      transition={{ duration: 0.8, ease: [0.21, 0.45, 0.32, 0.9], delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 const StaggerContainer = ({ children, className = "" }: { children: ReactNode; className?: string; key?: React.Key }) => {
   return (
@@ -177,8 +183,17 @@ const Header = ({ currentSlide, totalSlides, scrollProgress }: { currentSlide: n
   );
 };
 
+// Step counts for slides with progressive reveal
+const SLIDE_STEPS: Record<number, number> = {
+  2: 3, // Slide 3: 3 tópicos
+  3: 4, // Slide 4: 4 cards
+  6: 3, // Slide 7: 3 items
+  8: 4, // Slide 9: 4 sections
+};
+
 export default function App() {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: containerRef });
   const scaleX = useSpring(scrollYProgress, {
@@ -187,19 +202,67 @@ export default function App() {
     restDelta: 0.001
   });
 
+  // Get max steps for current slide
+  const maxSteps = SLIDE_STEPS[activeSlide] || 0;
+
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
       const scrollPos = containerRef.current.scrollTop;
       const height = containerRef.current.offsetHeight;
       const index = Math.round(scrollPos / height);
-      setActiveSlide(index);
+      if (index !== activeSlide) {
+        setActiveSlide(index);
+        setCurrentStep(0); // Reset steps when changing slides
+      }
     };
 
     const container = containerRef.current;
     container?.addEventListener('scroll', handleScroll);
     return () => container?.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [activeSlide]);
+
+  // Keyboard navigation with step-by-step reveal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'ArrowRight' || e.code === 'ArrowDown' || e.code === 'Space') {
+        e.preventDefault();
+        if (maxSteps > 0 && currentStep < maxSteps) {
+          // Still have steps to reveal
+          setCurrentStep(currentStep + 1);
+        } else {
+          // Move to next slide
+          if (activeSlide < 10) {
+            const newSlide = activeSlide + 1;
+            setActiveSlide(newSlide);
+            setCurrentStep(0);
+            containerRef.current?.scrollTo({
+              top: newSlide * containerRef.current.offsetHeight,
+              behavior: 'smooth'
+            });
+          }
+        }
+      } else if (e.code === 'ArrowLeft' || e.code === 'ArrowUp') {
+        e.preventDefault();
+        if (currentStep > 0) {
+          // Go to previous step
+          setCurrentStep(currentStep - 1);
+        } else if (activeSlide > 0) {
+          // Move to previous slide
+          const newSlide = activeSlide - 1;
+          setActiveSlide(newSlide);
+          setCurrentStep(SLIDE_STEPS[newSlide] || 0);
+          containerRef.current?.scrollTo({
+            top: newSlide * containerRef.current.offsetHeight,
+            behavior: 'smooth'
+          });
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeSlide, currentStep, maxSteps]);
 
   const slides = [
     // Slide 1: Capa
@@ -255,7 +318,7 @@ export default function App() {
     <Slide key={2} glowColor="rgba(66, 133, 244, 0.15)">
       <div className="flex flex-col justify-start pt-20 items-center text-center space-y-8">
         {/* Problem Statement - Big and Bold */}
-        <FadeUp className="w-full max-w-4xl">
+        <FadeUp stepIndex={-1} currentStep={currentStep} className="w-full max-w-4xl">
           <div className="space-y-6 mb-2">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-google-blue/15 border border-google-blue/30 text-google-blue font-mono text-[10px] uppercase mb-3">
               Gargalo 1: SDR Travado
@@ -275,7 +338,7 @@ export default function App() {
         </FadeUp>
 
         {/* Solution Block */}
-        <FadeUp delay={0.3} className="w-full max-w-4xl">
+        <FadeUp delay={0.3} stepIndex={1} currentStep={currentStep} className="w-full max-w-4xl">
           <div className="glass-card p-8 md:p-10 rounded-3xl border-2 border-google-blue/40 bg-google-blue/[0.08]">
             <div className="flex items-center gap-3 mb-6">
               <Zap className="w-8 h-8 text-google-blue" />
@@ -314,40 +377,40 @@ export default function App() {
 
     // Slide 4: Raio-X Arsenal SDR WhatsApp — Combat Modules
     <Slide key={3} glowColor="rgba(66, 133, 244, 0.12)">
-      <div className="space-y-12">
-        <FadeUp>
-          <h2 className="text-5xl md:text-7xl font-display leading-[0.95] font-black tracking-tight mb-4">
+      <div className="space-y-6">
+        <FadeUp stepIndex={-1} currentStep={currentStep}>
+          <h2 className="text-4xl md:text-5xl font-display leading-[0.95] font-black tracking-tight mb-2">
             MUITO ALÉM DE <br />
-            <span className="text-google-blue drop-shadow-[0_0_30px_rgba(66,133,244,0.5)]">RESPONDER RÁPIDO</span>
+            <span className="text-google-blue drop-shadow-[0_0_20px_rgba(66,133,244,0.4)]">RESPONDER RÁPIDO</span>
           </h2>
-          <p className="text-lg md:text-xl text-white/60 max-w-2xl leading-relaxed italic">
+          <p className="text-base md:text-lg text-white/60 max-w-2xl leading-relaxed italic">
             O Gemini não é um corretor ortográfico. É um copiloto que atua ANTES, DURANTE e DEPOIS da negociação.
           </p>
         </FadeUp>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* CARD 1: Auditoria de WhatsApp (QA) */}
-          <FadeUp delay={0.2}>
-            <div className="group relative h-full rounded-3xl overflow-hidden border border-google-blue/20 bg-gradient-to-br from-white/[0.05] to-black/40 p-8 hover:border-google-blue/40 transition-all">
+          <FadeUp delay={0.2} stepIndex={0} currentStep={currentStep}>
+            <div className="group relative h-full rounded-2xl overflow-hidden border border-google-blue/20 bg-gradient-to-br from-white/[0.05] to-black/40 p-5 hover:border-google-blue/40 transition-all">
               {/* Watermark Icon */}
               <div className="absolute top-0 right-0 opacity-10 text-google-blue pointer-events-none">
-                <FileText className="w-40 h-40 -mr-12 -mt-12" />
+                <FileText className="w-32 h-32 -mr-10 -mt-10" />
               </div>
 
-              <div className="relative z-10 space-y-6">
-                <span className="font-mono text-xs uppercase tracking-widest text-white/40">Cenário 01</span>
-                <h3 className="text-2xl font-bold text-white">Auditoria de WhatsApp (QA)</h3>
-                <p className="text-white/70 leading-relaxed">
+              <div className="relative z-10 space-y-3">
+                <span className="font-mono text-[10px] uppercase tracking-widest text-white/40">Cenário 01</span>
+                <h3 className="text-lg font-bold text-white">Auditoria de WhatsApp (QA)</h3>
+                <p className="text-xs text-white/70 leading-relaxed">
                   Avaliar a qualidade do atendimento consome horas. Basta o gestor enviar a conversa exportada (TXT) ou um print, e a IA faz a auditoria completa em segundos.
                 </p>
 
                 {/* Prompt Block */}
-                <div className="bg-black/40 rounded-2xl p-5 border border-google-blue/20">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Zap className="w-4 h-4 text-google-blue" />
-                    <span className="text-[9px] font-mono uppercase text-white/50">Comando Rápido</span>
+                <div className="bg-black/40 rounded-xl p-3 border border-google-blue/20">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Zap className="w-3 h-3 text-google-blue" />
+                    <span className="text-[8px] font-mono uppercase text-white/50">Comando Rápido</span>
                   </div>
-                  <p className="text-sm italic text-white/80">
+                  <p className="text-xs italic text-white/80">
                     "Analise esta conversa de WhatsApp contra o nosso checklist de vendas. O SDR investigou a dor corretamente? Fez o pitch na hora certa? Aponte os erros e dê uma nota de 0 a 10."
                   </p>
                 </div>
@@ -356,28 +419,28 @@ export default function App() {
           </FadeUp>
 
           {/* CARD 2: Fim dos Áudios Longos — DESTAQUE */}
-          <FadeUp delay={0.35}>
-            <div className="group relative h-full rounded-3xl overflow-hidden border-t-4 border-t-google-blue border-google-blue/30 bg-gradient-to-br from-google-blue/10 to-black/40 p-8 shadow-[0_0_30px_rgba(66,133,244,0.2)] hover:border-google-blue/50 transition-all">
+          <FadeUp delay={0.35} stepIndex={1} currentStep={currentStep}>
+            <div className="group relative h-full rounded-2xl overflow-hidden border-t-4 border-t-google-blue border-google-blue/30 bg-gradient-to-br from-google-blue/10 to-black/40 p-5 shadow-[0_0_20px_rgba(66,133,244,0.15)] hover:border-google-blue/50 transition-all">
               {/* Watermark Icon with Pulse */}
               <div className="absolute top-0 right-0 opacity-10 text-google-blue pointer-events-none animate-pulse">
-                <Mic className="w-40 h-40 -mr-12 -mt-12" />
+                <Mic className="w-32 h-32 -mr-10 -mt-10" />
               </div>
 
-              <div className="relative z-10 space-y-6">
+              <div className="relative z-10 space-y-3">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs uppercase tracking-widest text-google-blue font-bold">Cenário 02 — Game Changer</span>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-google-blue font-bold">Cenário 02 — Game Changer</span>
                 </div>
-                <h3 className="text-2xl font-bold text-white">Fim dos Áudios Longos</h3>
-                <p className="text-white/70 leading-relaxed">
+                <h3 className="text-lg font-bold text-white">Fim dos Áudios Longos</h3>
+                <p className="text-xs text-white/70 leading-relaxed">
                   O cliente manda um podcast de 5 minutos a contar a vida. O SDR perde tempo a ouvir e a anotar.
                 </p>
 
                 {/* Prompt Block - Highlighted */}
-                <div className="bg-google-blue/15 rounded-2xl p-5 border border-google-blue/40">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-[9px] font-mono uppercase tracking-widest bg-google-blue text-white px-2 py-1 rounded-full">3 Segundos</span>
+                <div className="bg-google-blue/15 rounded-xl p-3 border border-google-blue/40">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[8px] font-mono uppercase tracking-widest bg-google-blue text-white px-2 py-0.5 rounded-full">3 Segundos</span>
                   </div>
-                  <p className="text-sm italic text-white/85">
+                  <p className="text-xs italic text-white/85">
                     "Extraia as 3 principais dores deste áudio e crie uma resposta em tópicos focada no problema dele."
                   </p>
                 </div>
@@ -386,27 +449,27 @@ export default function App() {
           </FadeUp>
 
           {/* CARD 3: Simulador de Combate */}
-          <FadeUp delay={0.5}>
-            <div className="group relative h-full rounded-3xl overflow-hidden border border-red-500/20 bg-gradient-to-br from-white/[0.05] to-black/40 p-8 hover:border-red-500/40 transition-all">
+          <FadeUp delay={0.5} stepIndex={2} currentStep={currentStep}>
+            <div className="group relative h-full rounded-2xl overflow-hidden border border-red-500/20 bg-gradient-to-br from-white/[0.05] to-black/40 p-5 hover:border-red-500/40 transition-all">
               {/* Watermark Icon */}
               <div className="absolute top-0 right-0 opacity-10 text-red-500 pointer-events-none">
-                <Dumbbell className="w-40 h-40 -mr-12 -mt-12" />
+                <Dumbbell className="w-32 h-32 -mr-10 -mt-10" />
               </div>
 
-              <div className="relative z-10 space-y-6">
-                <span className="font-mono text-xs uppercase tracking-widest text-white/40">Cenário 03</span>
-                <h3 className="text-2xl font-bold text-white">Simulador de Combate</h3>
-                <p className="text-white/70 leading-relaxed">
+              <div className="relative z-10 space-y-3">
+                <span className="font-mono text-[10px] uppercase tracking-widest text-white/40">Cenário 03</span>
+                <h3 className="text-lg font-bold text-white">Simulador de Combate</h3>
+                <p className="text-xs text-white/70 leading-relaxed">
                   A negociação é de alto valor. O SDR está inseguro sobre como o dono da academia vai reagir ao preço.
                 </p>
 
                 {/* Prompt Block - Red Warning */}
-                <div className="bg-black/40 rounded-2xl p-5 border border-red-500/20">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Zap className="w-4 h-4 text-red-400" />
-                    <span className="text-[9px] font-mono uppercase text-red-400 font-bold">Erre com a IA, não com o Lead</span>
+                <div className="bg-black/40 rounded-xl p-3 border border-red-500/20">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Zap className="w-3 h-3 text-red-400" />
+                    <span className="text-[8px] font-mono uppercase text-red-400 font-bold">Erre com a IA, não com o Lead</span>
                   </div>
-                  <p className="text-sm italic text-white/80">
+                  <p className="text-xs italic text-white/80">
                     "Aja como um dono de academia focado em corte de custos. Ataque a minha proposta de valor abaixo."
                   </p>
                 </div>
@@ -415,27 +478,27 @@ export default function App() {
           </FadeUp>
 
           {/* CARD 4: Passagem de Bastão (Briefing) */}
-          <FadeUp delay={0.65}>
-            <div className="group relative h-full rounded-3xl overflow-hidden border border-google-blue/20 bg-gradient-to-br from-white/[0.05] to-black/40 p-8 hover:border-google-blue/40 transition-all">
+          <FadeUp delay={0.65} stepIndex={3} currentStep={currentStep}>
+            <div className="group relative h-full rounded-2xl overflow-hidden border border-google-blue/20 bg-gradient-to-br from-white/[0.05] to-black/40 p-5 hover:border-google-blue/40 transition-all">
               {/* Watermark Icon */}
               <div className="absolute top-0 right-0 opacity-10 text-google-blue pointer-events-none">
-                <Users className="w-40 h-40 -mr-12 -mt-12" />
+                <Users className="w-32 h-32 -mr-10 -mt-10" />
               </div>
 
-              <div className="relative z-10 space-y-6">
-                <span className="font-mono text-xs uppercase tracking-widest text-white/40">Cenário 04</span>
-                <h3 className="text-2xl font-bold text-white">Passagem de Bastão (Briefing)</h3>
-                <p className="text-white/70 leading-relaxed">
+              <div className="relative z-10 space-y-3">
+                <span className="font-mono text-[10px] uppercase tracking-widest text-white/40">Cenário 04</span>
+                <h3 className="text-lg font-bold text-white">Passagem de Bastão (Briefing)</h3>
+                <p className="text-xs text-white/70 leading-relaxed">
                   O SDR qualifica, mas o Vendedor entra na reunião final às cegas e repete as mesmas perguntas, irritando o dono da academia.
                 </p>
 
                 {/* Prompt Block */}
-                <div className="bg-black/40 rounded-2xl p-5 border border-aqua/20">
-                  <div className="flex items-center gap-2 mb-3">
-                    <CheckCircle2 className="w-4 h-4 text-aqua" />
-                    <span className="text-[9px] font-mono uppercase text-aqua font-bold">SDR ➡️ Closer</span>
+                <div className="bg-black/40 rounded-xl p-3 border border-aqua/20">
+                  <div className="flex items-center gap-2 mb-2">
+                    <CheckCircle2 className="w-3 h-3 text-aqua" />
+                    <span className="text-[8px] font-mono uppercase text-aqua font-bold">SDR ➡️ Closer</span>
                   </div>
-                  <p className="text-sm italic text-white/80">
+                  <p className="text-xs italic text-white/80">
                     "Analise o histórico desta conversa de WhatsApp. Qual a dor principal? Crie um briefing de 3 tópicos (com o que atacar e o que não mencionar) para o Vendedor que vai assumir a reunião agora."
                   </p>
                 </div>
@@ -589,7 +652,7 @@ export default function App() {
     // Slide 7: O Ringue — Gemini vs Claude
     <Slide key={6} glowColor="rgba(150, 100, 80, 0.1)">
       <div className="space-y-10">
-        <FadeUp>
+        <FadeUp stepIndex={-1} currentStep={currentStep}>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50 font-mono text-[10px] uppercase mb-4">
             Escolha a arma certa
           </div>
@@ -604,7 +667,7 @@ export default function App() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
           {/* Gemini */}
-          <FadeUp delay={0.2}>
+          <FadeUp delay={0.2} stepIndex={0} currentStep={currentStep}>
             <div className="glass-card p-8 rounded-3xl h-full border border-google-blue/20 bg-google-blue/[0.03]">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-google-blue/10 flex items-center justify-center">
@@ -637,7 +700,7 @@ export default function App() {
           </FadeUp>
 
           {/* Claude */}
-          <FadeUp delay={0.4}>
+          <FadeUp delay={0.4} stepIndex={1} currentStep={currentStep}>
             <div className="glass-card p-8 rounded-3xl h-full border border-claude-salmon/20 bg-claude-salmon/[0.03]">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-claude-salmon/10 flex items-center justify-center">
@@ -766,7 +829,7 @@ export default function App() {
     // Slide 9: NotebookLM — O Clone do Produto
     <Slide key={8} glowColor="rgba(52, 168, 83, 0.1)">
       <div className="space-y-6 flex flex-col h-full">
-        <FadeUp>
+        <FadeUp stepIndex={-1} currentStep={currentStep}>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-notebook-green/10 border border-notebook-green/20 text-notebook-green font-mono text-[10px] uppercase mb-2">
             NotebookLM na prática
           </div>
@@ -778,7 +841,7 @@ export default function App() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
           {/* Setup - Compacto */}
-          <FadeUp delay={0.2} className="flex flex-col justify-start">
+          <FadeUp delay={0.2} stepIndex={0} currentStep={currentStep} className="flex flex-col justify-start">
             <h3 className="text-white/40 font-mono text-xs uppercase tracking-widest mb-3">Upload uma vez:</h3>
             <StaggerContainer className="space-y-2">
               {[
@@ -802,7 +865,7 @@ export default function App() {
           </FadeUp>
 
           {/* Caso de uso - Centro */}
-          <FadeUp delay={0.3} className="lg:col-span-2">
+          <FadeUp delay={0.3} stepIndex={1} currentStep={currentStep} className="lg:col-span-2">
             <div className="glass-card p-5 rounded-2xl border-notebook-green/20 bg-notebook-green/[0.05] h-full flex flex-col">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-2 h-2 rounded-full bg-notebook-green animate-pulse" />
@@ -850,7 +913,7 @@ export default function App() {
         </div>
 
         {/* Foguete no Onboarding - Sempre visível */}
-        <FadeUp delay={0.5} className="w-full">
+        <FadeUp delay={0.5} stepIndex={2} currentStep={currentStep} className="w-full">
           <div className="glass-card p-5 rounded-2xl border-2 border-notebook-green/40 bg-notebook-green/[0.1]">
             <div className="flex items-start gap-3">
               <div className="w-12 h-12 rounded-xl bg-notebook-green/20 flex items-center justify-center shrink-0">
